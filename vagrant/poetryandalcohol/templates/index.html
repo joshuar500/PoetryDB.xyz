@@ -1,0 +1,21 @@
+<html>
+    <body>
+        <h1>Restaurants</h1>
+        <!--MESSAGE FLASHING EXAMPLE -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li><strong>{{message}}</strong></li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+        {% for r in restaurants %}
+        <div>
+            {{r.name}}<br />            
+            <br />
+        </div>
+        {% endfor %}
+    </body>
+</html>
