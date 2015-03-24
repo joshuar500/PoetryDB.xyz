@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Author, Poem, Alcohol
+from database_setup import Base, Author, Poem
 
 
 engine = create_engine('sqlite:///poetryandalcohol.db')
@@ -14,11 +14,25 @@ session = DBSession()
 
 
 # Making an API Endpoint (GET request)
+@app.route('/authors/JSON')
+def authors_JSON():
+    authors = session.query(Author).all()
+    return jsonify(Authors=[a.serialize for a in authors])
+
+
 @app.route('/authors/<int:author_id>/poems/JSON')
 def authors_poems_JSON(author_id):
     author = session.query(Author).filter_by(id=author_id).one()
     poems = session.query(Poem).filter_by(author_id=author.id).all()
-    return jsonify(MenuItems=[p.serialize for p in poems])
+    return jsonify(Poems=[p.serialize for p in poems])
+
+
+@app.route('/get_author_poems')
+def get_author_poems():
+    author_id = request.args.get('author_id', 0, type=int)
+    author = session.query(Author).filter_by(id=author_id).one()
+    poems = session.query(Poem).filter_by(author_id=author.id).all()
+    return jsonify(Poems=[p.serialize for p in poems])
 
 
 @app.route('/authors/<int:author_id>/poems/<int:poem_id>/JSON')
@@ -26,12 +40,12 @@ def menu_item_JSON(restaurant_id, poem_id):
     poem = session.query(Poem).filter_by(id=poem_id).one()
     return jsonify(Poem=poem.serialize)
 
-
+# TODO: Change this back to authors.html
 @app.route('/')
 @app.route('/authors/')
 def authors():
     authors = session.query(Author).all()
-    return render_template('authors.html', authors=authors)
+    return render_template('indextest.html', authors=authors)
 
 
 @app.route('/authors/<int:author_id>/')

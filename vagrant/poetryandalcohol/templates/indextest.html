@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+<script type="text/javascript">
+  $(function() {
+    var submit_form = function(e) {
+      $.getJSON($SCRIPT_ROOT + '/get_author_poems', {
+        author_id: $(this).attr('id')        
+      }, function(data) {
+        $('#result').text(data.Poems);        
+      });
+      return false;
+    };
+
+    $('a.author-link').bind('click', submit_form);
+
+    $('input[type=text]').bind('keydown', function(e) {
+      if (e.keyCode == 13) {
+        submit_form(e);
+      }
+    });
+
+    //$('input[name=a]').focus();
+  });
+</script>
+<h1>jQuery Example</h1>
+<!-- <p>
+  <input type="text" size="5" name="a"> +
+  <input type="text" size="5" name="b"> =
+  <span id="result">?</span>
+<p><a href=# id="calculate">calculate server side</a> -->
+  <h1>AUTHORS</h1>
+  <!--MESSAGE FLASHING EXAMPLE -->
+  {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+      {% for message in messages %}
+          <li><strong>{{message}}</strong></li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+  {% endwith %}
+  {% for a in authors %}
+  <div>
+      <a href="#" id="{{a.id}}" class="author-link">{{a.name}}</a><br />
+      <br />
+  </div>
+  {% endfor %}
+  <span id="result">?</span>
+{% endblock %}

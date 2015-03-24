@@ -36,7 +36,7 @@ poem1 = Poem(
                 Petals on a wet, black bough.''',
     alcohol=alcohol1,
     tags="imagery, subtle",
-    author=author1)
+    author=author1,)
 
 session.add(poem1)
 session.commit()

@@ -61,9 +61,9 @@ class Poem(Base):
             'name': self.name,
             'id': self.id,
             'the_poem': self.the_poem,
-            'alcohol': self.alcohol,
             'tags': self.tags,
             'author': self.author,
+            'alcohol': self.alcohol,
         }
 
 
