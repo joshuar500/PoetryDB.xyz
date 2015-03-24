@@ -1,6 +1,6 @@
 <html>
     <body>
-        <h1>Restaurants</h1>
+        <h1>AUTHORS</h1>
         <!--MESSAGE FLASHING EXAMPLE -->
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -11,9 +11,9 @@
             </ul>
             {% endif %}
         {% endwith %}
-        {% for r in restaurants %}
+        {% for a in authors %}
         <div>
-            {{r.name}}<br />            
+            {{a.name}}<br />            
             <br />
         </div>
         {% endfor %}

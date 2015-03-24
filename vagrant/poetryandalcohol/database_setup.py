@@ -42,7 +42,7 @@ class Poem(Base):
         }
 
 
-engine = create_engine('sqlite:///alcoholandpoetry.db')
+engine = create_engine('sqlite:///poetryandalcohol.db')
 
 # Goes into database and adds all our stuff
 Base.metadata.create_all(engine)
