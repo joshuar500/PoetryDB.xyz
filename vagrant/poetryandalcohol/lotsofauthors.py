@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from database_setup import Base, Author, Poem
+from database_setup import Base, Author, Poem, Alcohol
 
 engine = create_engine('sqlite:///poetryandalcohol.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -25,16 +25,22 @@ author1 = Author(name="Ezra Pound")
 session.add(author1)
 session.commit()
 
+alcohol1 = Alcohol(name="Whisky")
+
+session.add(alcohol1)
+session.commit()
+
 poem1 = Poem(
     name="In a Station of the Metro",
     the_poem='''THE apparition of these faces in the crowd;\n
                 Petals on a wet, black bough.''',
-    alcohol="Scotch",
+    alcohol=alcohol1,
     tags="imagery, subtle",
     author=author1)
 
 session.add(poem1)
 session.commit()
 
+session.close()
 
 print "added menu items!"

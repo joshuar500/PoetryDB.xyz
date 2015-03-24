@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Author, Poem
+from database_setup import Base, Author, Poem, Alcohol
 
 
 engine = create_engine('sqlite:///poetryandalcohol.db')
@@ -39,6 +39,15 @@ def authors_poems(author_id):
     author = session.query(Author).filter_by(id=author_id).one()
     poems = session.query(Poem).filter_by(author_id=author.id)
     return render_template('poems.html', author=author, poems=poems)
+
+
+@app.route('/authors/<int:author_id>/<int:poem_id>')
+def view_poem(author_id, poem_id):
+    author = session.query(Author).filter_by(id=author_id).one()
+    the_poem = session.query(Poem).filter_by(id=poem_id).one()
+    return render_template('viewpoem.html',
+        author=author,
+        the_poem=the_poem)
 
 
 @app.route(

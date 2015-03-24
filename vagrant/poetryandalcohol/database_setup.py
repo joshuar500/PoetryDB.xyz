@@ -16,6 +16,30 @@ class Author(Base):
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
 
+    @property
+    def serialize(self):
+        # Returns an object data in easily serializeable format
+        return {
+            'name': self.name,
+            'id': self.id,
+        }
+
+
+class Alcohol(Base):
+
+    __tablename__ = 'alcohol'
+
+    name = Column(String(80), nullable=False)
+    id = Column(Integer, primary_key=True)
+
+    @property
+    def serialize(self):
+        # Returns an object data in easily serializeable format
+        return {
+            'name': self.name,
+            'id': self.id,
+        }
+
 
 class Poem(Base):
 
@@ -24,8 +48,9 @@ class Poem(Base):
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
     the_poem = Column(String(250))
-    alcohol = Column(String(80))
     tags = Column(String(80))
+    alcohol_id = Column(Integer, ForeignKey('alcohol.id'))
+    alcohol = relationship(Alcohol)
     author_id = Column(Integer, ForeignKey('author.id'))
     author = relationship(Author)
 
@@ -35,9 +60,9 @@ class Poem(Base):
         return {
             'name': self.name,
             'id': self.id,
-            'the_poem': self.description,
-            'alcohol': self.price,
-            'tags': self.course,
+            'the_poem': self.the_poem,
+            'alcohol': self.alcohol,
+            'tags': self.tags,
             'author': self.author,
         }
 

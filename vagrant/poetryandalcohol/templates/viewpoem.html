@@ -11,11 +11,13 @@
             </ul>
             {% endif %}
         {% endwith %}
-        {% for i in poems %}
         <div>
-            {{i.name}}<br />
+            {{the_poem.name}}<br />
+            {{the_poem.the_poem}}<br />
+            Tastes like: {{the_poem.alcohol}}<br />
+            <a href='{{url_for('edit_poem', author_id=author.id, poem_id=the_poem.id)}}'>Edit</a><br />
+            <a href='{{url_for('delete_poem', author_id=author.id, poem_id=the_poem.id)}}'>Delete</a><br />
             <br />
         </div>
-        {% endfor %}
     </body>
 </html>
