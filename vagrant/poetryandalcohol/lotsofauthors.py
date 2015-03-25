@@ -32,8 +32,7 @@ session.commit()
 
 poem1 = Poem(
     name="In a Station of the Metro",
-    the_poem='''THE apparition of these faces in the crowd;\n
-                Petals on a wet, black bough.''',
+    the_poem='''THE apparition of these faces in the crowd;\nPetals on a wet, black bough.''',
     alcohol=alcohol1,
     tags="imagery, subtle",
     author=author1,)

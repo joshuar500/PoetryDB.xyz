@@ -45,7 +45,7 @@ def menu_item_JSON(author_id, poem_id):
 @app.route('/authors/')
 def authors():
     authors = session.query(Author).all()
-    return render_template('indextest.html', authors=authors)
+    return render_template('index.html', authors=authors)
 
 
 @app.route('/authors/<int:author_id>/')
