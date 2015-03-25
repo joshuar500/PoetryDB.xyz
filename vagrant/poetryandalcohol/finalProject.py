@@ -36,7 +36,7 @@ def get_author_poems():
 
 
 @app.route('/authors/<int:author_id>/poems/<int:poem_id>/JSON')
-def menu_item_JSON(restaurant_id, poem_id):
+def menu_item_JSON(author_id, poem_id):
     poem = session.query(Poem).filter_by(id=poem_id).one()
     return jsonify(Poem=poem.serialize)
 
