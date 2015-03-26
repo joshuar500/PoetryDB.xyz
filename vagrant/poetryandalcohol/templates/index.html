@@ -1,65 +1,63 @@
 {% extends "layout.html" %}
 {% block body %}
-<script type="text/javascript">
-  $(function() {
-    var submit_form = function(e) {
-      $.getJSON($SCRIPT_ROOT + '/get_author_poems', {
-        author_id: $(this).attr('id')
-      }, function(data) {
-        console.log(data);
-        if(data !== null) {          
-          $.each(data, function() {
-            $.each(this, function(key, value){
-                console.log(value.name);
-                $("#result").text(value.name);
-            });            
-          });          
-        } else {
-          console.log("fuckayou");
-        }
-      });
-      return false;
-    };
+    <h1>Poetry &amp; Alcohol</h1>
+    
+    <header>
+       <nav>
+          <ul class="nav inline-items">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Sign In</a></li>
+            <!--MESSAGE FLASHING -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li><strong>{{message}}</strong></li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+            {% endwith %}
+         </ul>
+      </nav>
+    </header>
 
-    $('a.author-link').bind('click', submit_form);    
+    <div class="columnsContainer">
 
-    $('a.author-link').bind('keydown', function(e) {
-      if (e.keyCode == 13) {
-        submit_form(e);
-      }
-    });
+      <div class="leftColumn">
+        <h2>Left Column (fluid)</h2>
+        <!-- List Authors -->
+        <p>
+        {% for a in authors %}
+          <div>
+              <a href="#" id="{{a.id}}" class="author-link">{{a.name}}</a><br />
+              <br />
+          </div>
+        {% endfor %}
+        </p>
 
-    //$('input[name=a]').focus();
-  });
-</script>
-<!-- <p>
-  <input type="text" size="5" name="a"> +
-  <input type="text" size="5" name="b"> =
-  <span id="result">?</span>
-<p><a href=# id="calculate">calculate server side</a> -->
-  <h1>AUTHORS</h1>
-  <!--MESSAGE FLASHING EXAMPLE -->
-  {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul>
-      {% for message in messages %}
-          <li><strong>{{message}}</strong></li>
-      {% endfor %}
-      </ul>
-      {% endif %}
-  {% endwith %}
-  {% for a in authors %}
-  <div>
-      <a href="#" id="{{a.id}}" class="author-link">{{a.name}}</a><br />
-      <br />
-  </div>
-  {% endfor %}
-  <span id="result">?
-    {% for i in Poems %}
-        <div>
-            {{i.name}}<br />
-            <br />
-        </div>
-    {% endfor %}
-  </span>
+      </div>
+
+      <div class="rightColumn">
+        <h2>Right Column</h2>
+        <!-- List Poems -->
+        <p>
+          <span id="result">?
+            {% for i in Poems %}
+                <div>
+                    {{i.name}}<br />
+                    <br />
+                </div>
+            {% endfor %}
+          </span>
+        </p>
+
+      </div>
+
+    </div>
+    
+    <footer>
+      <p><a href="#">Contact Us</a> | <a href="#">Sitemap</a> | <a href="#">Privacy Policy</a></p>
+      <p>&copy;2014 Copyright info here...</p>
+    </footer>
 {% endblock %}
