@@ -11,9 +11,8 @@ $(function() {
     clear_list();
     if(data !== null) {          
       $.each(data, function() {
-        $.each(this, function(key, value){
-            console.log(value.name);
-            $('ol').append('<li>' + value.name + '</li>');
+        $.each(this, function(key, value){            
+            $('#poem-list').append('<li id="' + value.id + '">' + value.name + '</li>');
         });            
       });          
     } else {

@@ -1,69 +1,41 @@
 {% extends "layout.html" %}
 {% block body %}    
     
-    <header>
-       <!-- <nav>
-          <ul class="nav inline-items">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Sign In</a></li>
-            
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul>
-                {% for message in messages %}
-                    <li><strong>{{message}}</strong></li>
-                {% endfor %}
-                </ul>
-                {% endif %}
-            {% endwith %}
-         </ul>
-      </nav> -->
+    <header class="full">
+       <h1>Poetry &amp; Alcohol</h1>
+        <p>About | Login | Contact</p>
     </header>
     <section>
 
-      <article class="full">
-        <h1>Poetry &amp; Alcohol</h1>
-        <p>About | Login | Contact</p>
-      </article>
-
       <article class="left-side">
 
-        <h1>Left Half</h1>
-        <p>
-            {% for a in authors %}
-              <div>
-                  <a href="#" id="{{a.id}}" class="author-link">{{a.name}}</a><br />
-                  <br />
-              </div>
-            {% endfor %}
-            </p>
+        <h1>Authors</h1>
+        <!-- List Authors -->
+          <p>
+          <ol>
+          {% for a in authors %}            
+            <li><a href="#" id="{{a.id}}" class="author-link">{{a.name}}</a></li>
+          {% endfor %}
+          </ol>
+          </p>
+          <p class="add-author">
+          or click to add a new author...
+          </p>
       </article>      
 
       <article class="right-side">      
 
-        <h1>Right Half</h1>
+        <h1>Poems</h1>
         <!-- List Poems -->
-            <p>
-              <span id="result">
-                <ol id="poem-list">
-                  
-                </ol>
-              </span>
-            </p>
-      </article>
-      
-      <!-- <article class="left-side">
-        <img alt="" src="http://placehold.it/150/150" style="float:right" title="Floated image just to prove a point" />
-        <h1>Left Half</h1>
-        <p>Weekends don't count unless you spend them doing something completely pointless.</p>
+          <p>
+            <span id="result">
+              <ol id="poem-list">
+                                
+              </ol>
+            </span>
+          </p>
       </article>
 
-      <article class="right-side">
-        <img alt="" src="http://placehold.it/150/150" style="float:left" title="Floated image just to prove a point" />
-        <h1>Right Half</h1>
-        <p>If your knees aren't green by the end of the day, you ought to seriously re-examine your life.</p>
-      </article> -->
     </section>
     
     <footer class="full">
