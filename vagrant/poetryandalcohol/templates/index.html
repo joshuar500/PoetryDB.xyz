@@ -1,14 +1,13 @@
 {% extends "layout.html" %}
-{% block body %}
-    <h1>Poetry &amp; Alcohol</h1>
+{% block body %}    
     
     <header>
-       <nav>
+       <!-- <nav>
           <ul class="nav inline-items">
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Sign In</a></li>
-            <!--MESSAGE FLASHING -->
+            
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                 <ul>
@@ -19,41 +18,55 @@
                 {% endif %}
             {% endwith %}
          </ul>
-      </nav>
+      </nav> -->
     </header>
+    <section>
 
-    <div class="columnsContainer">
+      <article class="full">
+        <h1>Poetry &amp; Alcohol</h1>
+        <p>About | Login | Contact</p>
+      </article>
 
-      <div class="leftColumn">
-        <h2>Left Column (fluid)</h2>
-        <!-- List Authors -->
+      <article class="left-side">
+
+        <h1>Left Half</h1>
         <p>
-        {% for a in authors %}
-          <div>
-              <a href="#" id="{{a.id}}" class="author-link">{{a.name}}</a><br />
-              <br />
-          </div>
-        {% endfor %}
-        </p>
+            {% for a in authors %}
+              <div>
+                  <a href="#" id="{{a.id}}" class="author-link">{{a.name}}</a><br />
+                  <br />
+              </div>
+            {% endfor %}
+            </p>
+      </article>      
 
-      </div>
+      <article class="right-side">      
 
-      <div class="rightColumn">
-        <h2>Right Column</h2>
+        <h1>Right Half</h1>
         <!-- List Poems -->
-        <p>
-          <span id="result">
-            <ol id="poem-list">
-              
-            </ol>
-          </span>
-        </p>
+            <p>
+              <span id="result">
+                <ol id="poem-list">
+                  
+                </ol>
+              </span>
+            </p>
+      </article>
+      
+      <!-- <article class="left-side">
+        <img alt="" src="http://placehold.it/150/150" style="float:right" title="Floated image just to prove a point" />
+        <h1>Left Half</h1>
+        <p>Weekends don't count unless you spend them doing something completely pointless.</p>
+      </article>
 
-      </div>
-
-    </div>
+      <article class="right-side">
+        <img alt="" src="http://placehold.it/150/150" style="float:left" title="Floated image just to prove a point" />
+        <h1>Right Half</h1>
+        <p>If your knees aren't green by the end of the day, you ought to seriously re-examine your life.</p>
+      </article> -->
+    </section>
     
-    <footer>
+    <footer class="full">
       <p><a href="#">Contact Us</a> | <a href="#">Sitemap</a> | <a href="#">Privacy Policy</a></p>
       <p>&copy;2014 Copyright info here...</p>
     </footer>
