@@ -2,20 +2,28 @@ $(function() {
   var submit_form = function(e) {
     $.getJSON($SCRIPT_ROOT + '/get_author_poems', {
       author_id: $(this).attr('id')
-    }, function(data) {
-      console.log(data);
-      if(data !== null) {          
-        $.each(data, function() {
-          $.each(this, function(key, value){
-              console.log(value.name);
-              $("#result").text(value.name);
-          });            
-        });          
-      } else {
-        console.log("fuckayou");
-      }
-    });
+    }, update_list);
     return false;
+  };
+
+  var update_list = function(data) {
+    console.log(data);
+    clear_list();
+    if(data !== null) {          
+      $.each(data, function() {
+        $.each(this, function(key, value){
+            console.log(value.name);
+            $('ol').append('<li>' + value.name + '</li>');
+        });            
+      });          
+    } else {
+      console.log('fuckayou');
+    }
+  };
+
+  var clear_list = function() {
+    console.log("panis");
+    $('#poem-list').empty();
   };
 
   $('a.author-link').bind('click', submit_form);    
