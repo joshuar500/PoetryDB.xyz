@@ -21,7 +21,7 @@
           <p class="add-author">
           <a href="#test-form" class="popup-with-form open-popup-link">or click to add a new author...</a>
             <!-- form to add author -->
-            <form id="test-form" class="mfp-hide white-popup-block white-popup">
+            <form id="test-form" class="mfp-hide white-popup-block white-popup" action="{{url_for('add_author')}}" method="post">
               <h1>Add Author</h1>
               <fieldset style="border:0;">
                 <p>Please enter an author's name:</p>
@@ -29,7 +29,10 @@
                   <li>
                     <label for="name">Author Name: </label>
                     <input id="name" name="name" placeholder="e.g. Jon Snow" required="" type="text">
-                  </li>                  
+                  </li>
+                  <li>
+                    <input type="submit" value="Create">
+                  </li>
                 </ol>
               </fieldset>
             </form>

@@ -20,6 +20,27 @@ def authors_JSON():
     return jsonify(Authors=[a.serialize for a in authors])
 
 
+@app.route('/authors/new/', methods=['GET', 'POST'])
+def add_author():
+    if request.method == 'POST':
+        newAuthor = Author(name=request.form['name'])
+        session.add(newAuthor)
+        session.commit()
+        flash("new author created")
+        return redirect(url_for('back'))
+    else:
+        return render_template('index.html')
+
+
+@app.route('/back')
+def back():
+    this_url = 'authors'
+    if this_url is None:
+        return redirect(url_for('authors'))
+    else:
+        return redirect(this_url)
+
+
 @app.route('/authors/<int:author_id>/poems/JSON')
 def authors_poems_JSON(author_id):
     author = session.query(Author).filter_by(id=author_id).one()
@@ -73,7 +94,7 @@ def new_poem(author_id):
         session.add(newPoem)
         session.commit()
         flash("new poem created")
-        return redirect(url_for('authors_poems', author_id=author_id))
+        return redirect(url_for('authors', author_id=author_id))
     else:
         return render_template('newpoem.html', author_id=author_id)
 
