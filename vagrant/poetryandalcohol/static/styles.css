@@ -91,6 +91,10 @@ ol li {
   margin: 20px auto;
 }
 
+#copyright {
+  font-size: .6em;
+}
+
 /* MEDIA QUERIES */
 @media screen and (min-width: 47.5em ) {
   .leftColumn { margin-right: 19.5em; }
