@@ -13,13 +13,22 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# Making an API Endpoint (GET request)
+# set up index route
+@app.route('/')
+@app.route('/authors/')
+def authors():
+    authors = session.query(Author).all()
+    return render_template('index.html', authors=authors)
+
+
+# queries all authors and returns JSON
 @app.route('/authors/JSON')
 def authors_JSON():
     authors = session.query(Author).all()
     return jsonify(Authors=[a.serialize for a in authors])
 
 
+# adds an author to the database
 @app.route('/authors/new/', methods=['GET', 'POST'])
 def add_author():
     if request.method == 'POST':
@@ -29,9 +38,11 @@ def add_author():
         flash("new author created")
         return redirect(url_for('back'))
     else:
+        # this should return an error on the form
         return render_template('index.html')
 
 
+# redirects the user to the index page
 @app.route('/back')
 def back():
     this_url = 'authors'
@@ -41,13 +52,8 @@ def back():
         return redirect(this_url)
 
 
-@app.route('/authors/<int:author_id>/poems/JSON')
-def authors_poems_JSON(author_id):
-    author = session.query(Author).filter_by(id=author_id).one()
-    poems = session.query(Poem).filter_by(author_id=author.id).all()
-    return jsonify(Poems=[p.serialize for p in poems])
-
-
+# returns a list of the authors poems in json format
+# list is updated via jquery getJSON
 @app.route('/get_author_poems')
 def get_author_poems():
     author_id = request.args.get('author_id', 0, type=int)
@@ -56,17 +62,19 @@ def get_author_poems():
     return jsonify(Poems=[p.serialize for p in poems])
 
 
+@app.route('/get_poem')
+def get_poem():
+    print "IM HERE"
+    poem_id = request.args.get('poem_id', 0, type=int)
+    poem = session.query(Poem).filter_by(id=poem_id).one()
+    return jsonify(Poem=poem.serialize)
+
+
+#delete
 @app.route('/authors/<int:author_id>/poems/<int:poem_id>/JSON')
 def menu_item_JSON(author_id, poem_id):
     poem = session.query(Poem).filter_by(id=poem_id).one()
     return jsonify(Poem=poem.serialize)
-
-# TODO: Change this back to authors.html
-@app.route('/')
-@app.route('/authors/')
-def authors():
-    authors = session.query(Author).all()
-    return render_template('index.html', authors=authors)
 
 
 @app.route('/authors/<int:author_id>/')
