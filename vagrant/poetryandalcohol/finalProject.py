@@ -62,49 +62,13 @@ def get_author_poems():
     return jsonify(Poems=[p.serialize for p in poems])
 
 
+# returns a single poem in json for jquery update
 @app.route('/get_poem')
 def get_poem():
     print "IM HERE"
     poem_id = request.args.get('poem_id', 0, type=int)
     poem = session.query(Poem).filter_by(id=poem_id).one()
     return jsonify(Poem=poem.serialize)
-
-
-#delete
-@app.route('/authors/<int:author_id>/poems/<int:poem_id>/JSON')
-def menu_item_JSON(author_id, poem_id):
-    poem = session.query(Poem).filter_by(id=poem_id).one()
-    return jsonify(Poem=poem.serialize)
-
-
-@app.route('/authors/<int:author_id>/')
-def authors_poems(author_id):
-    author = session.query(Author).filter_by(id=author_id).one()
-    poems = session.query(Poem).filter_by(author_id=author.id)
-    return render_template('poems.html', author=author, poems=poems)
-
-
-@app.route('/authors/<int:author_id>/<int:poem_id>')
-def view_poem(author_id, poem_id):
-    author = session.query(Author).filter_by(id=author_id).one()
-    the_poem = session.query(Poem).filter_by(id=poem_id).one()
-    return render_template('viewpoem.html',
-        author=author,
-        the_poem=the_poem)
-
-
-@app.route(
-    '/authors/<int:author_id>/new',
-    methods=['GET', 'POST'])
-def new_poem(author_id):
-    if request.method == 'POST':
-        newPoem = Poem(name=request.form['name'], author_id=author_id)
-        session.add(newPoem)
-        session.commit()
-        flash("new poem created")
-        return redirect(url_for('authors', author_id=author_id))
-    else:
-        return render_template('newpoem.html', author_id=author_id)
 
 
 @app.route(

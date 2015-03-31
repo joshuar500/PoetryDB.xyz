@@ -1,21 +1,15 @@
-<html>
-    <body>
-        <h1>AUTHORS</h1>
-        <!--MESSAGE FLASHING EXAMPLE -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul>
-            {% for message in messages %}
-                <li><strong>{{message}}</strong></li>
-            {% endfor %}
-            </ul>
-            {% endif %}
-        {% endwith %}
-        {% for a in authors %}
-        <div>
-            {{a.name}}<br />            
-            <br />
-        </div>
-        {% endfor %}
-    </body>
-</html>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li><strong>{{message}}</strong></li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endwith %}
+{% for a in authors %}
+<div>
+    {{a.name}}<br />            
+    <br />
+</div>
+{% endfor %}
