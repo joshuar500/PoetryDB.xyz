@@ -53,19 +53,13 @@ $(document).ready(function() {
     }, update_poem);    
     return false;
   };
-  var update_poem = function(data) {
-    console.log("getting one poem");    
+  var update_poem = function(data) {    
     if(data !== null) {          
       $.each(data, function(key, value) {
         console.log(value.id);
-        $('#poem').append('<span class = "fix-lines">' + value.the_poem + '<span>');
-        console.log("fkn slide please");
-        classie.remove(body, activeNav);
-        activeNav = "";
-        classie.add( body, "pmr-open-again" );
-        document.body.appendChild(mask);
-        activeNav = "pmr-open-again";
-      });          
+        $('#poem').append('<span class = "fix-lines">' + value.the_poem + '<span>');        
+      });
+      remove_classie_stuff();
     } else {
       console.log('fuckayou');
     }
@@ -157,9 +151,19 @@ $(document).ready(function() {
 
     var body = document.body,
       mask = document.createElement("div"),
+      mask_again = document.createElement("div"),
       activeNav
     ;
     mask.className = "mask";
+    mask_again.className = "mask-again";
+
+    var remove_classie_stuff = function() {      
+      classie.remove(body, activeNav);
+      activeNav = "";
+      classie.add( body, "pmr-open-again" );
+      document.body.appendChild(mask_again);
+      activeNav = "pmr-open-again";  
+    }
 
     /* push menu right */
     $('.toggle-push-right').bind( "click", function(){
@@ -173,6 +177,7 @@ $(document).ready(function() {
       classie.remove( body, activeNav );
       activeNav = "";      
       $( "div" ).remove( ".mask" );
+      $( "div" ).remove( ".mask-again" );
     } );
 
     /* hide active menu if close menu button is clicked */
@@ -180,5 +185,7 @@ $(document).ready(function() {
         classie.remove( body, activeNav );
         activeNav = "";        
         $( "div" ).remove( ".mask" );
+        $( "div" ).remove( ".mask-again" );
     });
+
 }); 

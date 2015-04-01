@@ -2,17 +2,20 @@
 {% block body %}
 <body id="super-body">
 
+{% include "addauthor.html" %}
+
 <div class="menu-again push-menu-right-again">
     <button class="close-menu-again">Close &rarr;</button>
-    <ol id="poem">
-    derpaaaaaaaaaaaasdasdasd
+    <ol id="poem">    
     </ol>    
 </div><!-- /push poem right -->
 
 <div class="menu push-menu-right">
-    <button class="close-menu">Close &rarr;</button>
-    <ol id="poem-list">        
-    </ol>    
+    <div class="menu-container">
+        <button class="close-menu">Close &rarr;</button>
+        <ol id="poem-list">        
+        </ol>
+    </div>
 </div><!-- /push poem list right -->
 
 <div id="wrapper">
@@ -34,12 +37,14 @@
 
     <div id="main">
         <div class="container">
-            
+            <h1>Authors</h1>
+            <a href="#test-form" class="popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
+            <br /><br />
             <div class="buttons">                
                 {% for a in authors %}
                 <button id="{{a.id}}" class="nav-toggler toggle-push-right author-link">
                 {{a.name}}
-                </button><br />
+                </button> <i id="{{a.id}}" class="fa fa-pencil-square-o"></i> <br />
                 {% endfor %}
             </div><!-- /buttons -->
 

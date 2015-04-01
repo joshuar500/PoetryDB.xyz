@@ -26,6 +26,7 @@ button {
 body {
     overflow-x: hidden
 }
+
 #wrapper {
     position: relative;
     z-index: 10;
@@ -76,6 +77,11 @@ section.toggle {
     background: rgba(255, 255, 255, 0.1);
 }
 
+.fix-lines {
+    white-space: pre-line;
+    white-space: pre-wrap;
+}
+
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
 |* Toggle Buttons
@@ -105,6 +111,12 @@ section.toggle {
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
 /* general style for all menus */
+
+div.menu-container {
+    width:600px;
+    text-align: center;
+}
+
 div.menu {
     position: fixed;
     z-index: 20;
@@ -138,7 +150,7 @@ button.close-menu:focus {
 /* slide menu left and right, push menu left and right */
 div.push-menu-right {
     top: 0;
-    width: 100%;
+    width: 80%;
     height: 100%;
 }
 
@@ -229,7 +241,7 @@ button.close-menu-again:focus {
 /* slide menu left and right, push menu left and right */
 div.push-menu-right-again {
     top: 0;
-    width: 100%;
+    width: 80%;
     height: 100%;
 }
 
@@ -283,6 +295,22 @@ body.pmt-open-again #wrapper {
 body.pmb-open-again #wrapper {
     top: -100px
 }
+
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Form
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+
+.white-popup {
+    position: relative;
+    background: #fff;
+    padding: 20px;
+    width: auto;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
 |* Media Queries
