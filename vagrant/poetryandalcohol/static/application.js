@@ -32,7 +32,7 @@ $(document).ready(function() {
     if(data !== null) {          
       $.each(data, function() {
         $.each(this, function(key, value){            
-            $('#poem-list').append('<button><a href="#" id="' + value.id +'" class="poem-link">' + value.name + '</a></button><br />');
+            $('#poem-list').append('<button class="poem-link nav-toggler toggle-push-right-again" id="'+ value.id +'"><a href="#">' + value.name + '</a></button><br />');
         });            
       });
         $('button.poem-link').bind('click', get_one_poem);    
@@ -40,26 +40,31 @@ $(document).ready(function() {
         $('button.poem-link').bind('keydown', function(e) {
           if (e.keyCode == 13) {
             get_one_poem(e);
-          }
+          }        
   });
     } else {
       console.log('whatdafuk');
     }
   };
 
-  var get_one_poem = function(e) {    
+  var get_one_poem = function(e) {   
     $.getJSON($SCRIPT_ROOT + '/get_poem', {
       poem_id: $(this).attr('id')
-    }, update_poem);
+    }, update_poem);    
     return false;
   };
   var update_poem = function(data) {
-    console.log(data);
-    clear_list();
+    console.log("getting one poem");    
     if(data !== null) {          
       $.each(data, function(key, value) {
         console.log(value.id);
-        $('#poem-list').append('<span class = "fix-lines">' + value.the_poem + '<span>');
+        $('#poem').append('<span class = "fix-lines">' + value.the_poem + '<span>');
+        console.log("fkn slide please");
+        classie.remove(body, activeNav);
+        activeNav = "";
+        classie.add( body, "pmr-open-again" );
+        document.body.appendChild(mask);
+        activeNav = "pmr-open-again";
       });          
     } else {
       console.log('fuckayou');
@@ -152,8 +157,6 @@ $(document).ready(function() {
 
     var body = document.body,
       mask = document.createElement("div"),
-      togglePushRight = document.querySelector( ".toggle-push-right" ),
-      pushMenuRight = document.querySelector( ".push-menu-right" ),
       activeNav
     ;
     mask.className = "mask";
@@ -163,19 +166,19 @@ $(document).ready(function() {
       classie.add( body, "pmr-open" );
       document.body.appendChild(mask);
       activeNav = "pmr-open";
-    } );
+    } );    
 
     /* hide active menu if mask is clicked */
     $('div').bind( "click", function(){
       classie.remove( body, activeNav );
-      activeNav = "";
-      document.body.removeChild(mask);
+      activeNav = "";      
+      $( "div" ).remove( ".mask" );
     } );
 
     /* hide active menu if close menu button is clicked */
-    $('.close-menu').bind( "click", function(){
+    $('.close-menu').bind( "click", function(){        
         classie.remove( body, activeNav );
-        activeNav = "";
-        document.body.removeChild(mask);      
+        activeNav = "";        
+        $( "div" ).remove( ".mask" );
     });
 }); 

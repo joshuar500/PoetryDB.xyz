@@ -65,6 +65,17 @@ section.toggle {
     height: 100%;
     background: rgba(255, 255, 255, 0.1);
 }
+
+.mask-again {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 25;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
 |* Toggle Buttons
@@ -98,14 +109,14 @@ div.menu {
     position: fixed;
     z-index: 20;
     background-color: #fff;
-    overflow: hidden;
+    overflow: hidden;    
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
 }
-div.menu ul {
+div.menu ol {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -131,22 +142,22 @@ div.push-menu-right {
     height: 100%;
 }
 
-div.push-menu-right li {
+div.push-menu-right button {
     display: block;
     text-align: center;
     border-bottom: solid 1px #e3e3e3;
     border-top: solid 1px #fff;
 }
 
-div.push-menu-right li:first-child {
+div.push-menu-right button:first-child {
     border-top: none
 }
 
-div.push-menu-right li:last-child {
+div.push-menu-right button:last-child {
     border-bottom: none
 }
 
-div.push-menu-right a {
+div.push-menu-right button a {
     display: block;
     padding: 10px;
     font-size: 18px;
@@ -179,6 +190,97 @@ body.pmt-open #wrapper {
     top: 100px
 }
 body.pmb-open #wrapper {
+    top: -100px
+}
+
+/* push it right again */
+
+div.menu-again {
+    position: fixed;
+    z-index: 40;
+    background-color: #fff;
+    overflow: hidden;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+div.menu-again ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+div.menu-again a {
+    font-weight: 300;
+    color: #444;
+}
+div.menu-again a:hover {    
+    text-decoration: underline;
+}
+button.close-menu-again {
+    background-color: #eee;
+    color: #444;
+}
+button.close-menu-again:focus {
+    outline: none
+}
+/* slide menu left and right, push menu left and right */
+div.push-menu-right-again {
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+div.push-menu-right-again li {
+    display: block;
+    text-align: center;
+    border-bottom: solid 1px #e3e3e3;
+    border-top: solid 1px #fff;
+}
+
+div.push-menu-right-again li:first-child {
+    border-top: none
+}
+
+div.push-menu-right-again li:last-child {
+    border-bottom: none
+}
+
+div.push-menu-right-again a {
+    display: block;
+    padding: 10px;
+    font-size: 18px;
+}
+
+div.push-menu-right-again button.close-menu-again {
+    margin: 10px 0;
+    padding: 10px 30px;
+    background-color: #3184a1;
+    color: #fff;
+}
+
+div.slide-menu-right-again,
+div.push-menu-right-again {
+    right: -200%;
+}
+
+body.smr-open-again div.slide-menu-right-again,
+body.pmr-open-again div.push-menu-right-again {
+    right: 0
+}
+body.pml-open-again #wrapper {
+    left: 200%;
+}
+body.pmr-open-again #wrapper {
+    left: -200%;
+}
+ 
+body.pmt-open-again #wrapper {
+    top: 100px
+}
+body.pmb-open-again #wrapper {
     top: -100px
 }
 /* ------------------------------------------------------------ *\
