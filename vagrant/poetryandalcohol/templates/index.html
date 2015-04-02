@@ -3,6 +3,8 @@
 <body id="super-body">
 
 {% include "addauthor.html" %}
+{% include "updateauthor.html" %}
+{% include "deleteauthor.html" %}
 
 <div class="menu-again push-menu-right-again">
     <button class="close-menu-again">Close &rarr;</button>
@@ -38,13 +40,22 @@
     <div id="main">
         <div class="container">
             <h1>Authors</h1>
-            <a href="#test-form" class="popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
+            <a href="#add-author-form" class="popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
             <br /><br />
             <div class="buttons">                
                 {% for a in authors %}
                 <button id="{{a.id}}" class="nav-toggler toggle-push-right author-link">
                 {{a.name}}
-                </button> <i id="{{a.id}}" class="fa fa-pencil-square-o"></i> <br />
+                </button>
+                <span id="{{a.id}}" class="fa-links">
+                    <a href="#update-author-form" class="update-author-link popup-with-form open-popup-link">
+                    <i class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <a href="#delete-author-form" class="update-author-link popup-with-form open-popup-link">
+                    <i class="fa fa-times"></i>
+                    </a>
+                </span>
+                <br />
                 {% endfor %}
             </div><!-- /buttons -->
 

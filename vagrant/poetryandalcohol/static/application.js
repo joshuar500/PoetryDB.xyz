@@ -18,16 +18,14 @@ $(document).ready(function() {
         }
       });
 
-  /*GET LIST OF POEMS BY AUTHOR*/
-  var get_poems = function(e) {
-    console.log("getting poems");
+  /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
+  var get_poems = function(e) {    
     $.getJSON($SCRIPT_ROOT + '/get_author_poems', {
       author_id: $(this).attr('id')
     }, update_poem_list);
     return false;
   };
-  var update_poem_list = function(data) {
-    console.log(data);
+  var update_poem_list = function(data) {    
     clear_list();
     if(data !== null) {          
       $.each(data, function() {
@@ -43,10 +41,11 @@ $(document).ready(function() {
           }        
   });
     } else {
-      console.log('whatdafuk');
+      return false;
     }
   };
 
+  /*GET A SINGLE POEM THEN UPDATE THE PAGE*/
   var get_one_poem = function(e) {   
     $.getJSON($SCRIPT_ROOT + '/get_poem', {
       poem_id: $(this).attr('id')
@@ -61,15 +60,35 @@ $(document).ready(function() {
       });
       remove_classie_stuff();
     } else {
-      console.log('fuckayou');
+      return false;
     }
   };
+
+  /*UPDATE THE AUTHORS NAME/ID FOR FORM*/
+  /*FORM DOES ACTUAL LOGIC*/
+  var update_author_place = function() {      
+      clear_author_forms();
+      /*now update everything*/      
+      author_id = $(this).parent().attr('id');
+      console.log(author_id);    
+      $('#update-author-form #id').attr('value', author_id);      
+      $('#delete-author-form #id').attr('value', author_id);
+  }
 
   /*CLEAR POEM LIST*/
   var clear_list = function() {    
     $('#poem-list').empty();
   };
 
+  var clear_author_forms = function() {
+    $('#update-author-form #name').attr('value', '');
+    $('#update-author-form #id').attr('value', '');
+
+    $('#delete-author-form #name').attr('value', '');
+    $('#delete-author-form #id').attr('value', '');
+  }
+
+  /*BIND CLICKS*/
   $('button.author-link').bind('click', get_poems);    
 
   $('button.author-link').bind('keydown', function(e) {
@@ -77,6 +96,9 @@ $(document).ready(function() {
       get_poems(e);
     }
   });
+
+  $('a.update-author-link').bind('click', update_author_place);
+
 
 /*!
 * classie v1.0.0
