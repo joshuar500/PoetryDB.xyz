@@ -1,22 +1,26 @@
 $(document).ready(function() {
 
-    $('.popup-with-form').magnificPopup({
-        type: 'inline',
-        preloader: false,
-        focus: '#name',
+    var initMagPopup = function() {
+      $('.popup-with-form').magnificPopup({
+          type: 'inline',
+          preloader: false,
+          focus: '#name',
 
-        // When elemened is focused, some mobile browsers in some cases zoom in
-        // It looks not nice, so we disable it:
-        callbacks: {
-          beforeOpen: function() {
-            if($(window).width() < 700) {
-              this.st.focus = false;
-            } else {
-              this.st.focus = '#name';
+          // When elemened is focused, some mobile browsers in some cases zoom in
+          // It looks not nice, so we disable it:
+          callbacks: {
+            beforeOpen: function() {
+              if($(window).width() < 700) {
+                this.st.focus = false;
+              } else {
+                this.st.focus = '#name';
+              }
             }
           }
-        }
-      });
+        });
+    }
+
+    initMagPopup();
 
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
   var get_poems = function(e) {    
@@ -30,7 +34,13 @@ $(document).ready(function() {
     if(data !== null) {          
       $.each(data, function() {
         $.each(this, function(key, value){            
-            $('#poem-list').append('<button class="poem-link nav-toggler toggle-push-right-again" id="'+ value.id +'"><a href="#">' + value.name + '</a></button><br />');
+            $('#poem-list').append('<button class="poem-link nav-toggler toggle-push-right-again" id="'+ value.id +'"><a href="#">' + value.name + '</a></button>' +                                    
+                                    '<a href="#update-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
+                                    '<i class="fa fa-pencil-square-o"><span style="display:none;">' + value.author_id + '</span></i>' +
+                                    '</a>' +
+                                    '<a href="#delete-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
+                                    '<i class="fa fa-times"><span style="display:none;">' + value.author_id + '</span></i>' +
+                                    '</a><br />');
         });            
       });
         $('button.poem-link').bind('click', get_one_poem);    
@@ -39,7 +49,12 @@ $(document).ready(function() {
           if (e.keyCode == 13) {
             get_one_poem(e);
           }        
-  });
+        });
+
+        initMagPopup();        
+
+        $('a.update-poem-link').bind('click', update_poem_place);       
+
     } else {
       return false;
     }
@@ -49,10 +64,10 @@ $(document).ready(function() {
   var get_one_poem = function(e) {   
     $.getJSON($SCRIPT_ROOT + '/get_poem', {
       poem_id: $(this).attr('id')
-    }, update_poem);    
+    }, display_poem);    
     return false;
   };
-  var update_poem = function(data) {    
+  var display_poem = function(data) {    
     if(data !== null) {          
       $.each(data, function(key, value) {
         console.log(value.id);
@@ -69,10 +84,20 @@ $(document).ready(function() {
   var update_author_place = function() {      
       clear_author_forms();
       /*now update everything*/      
-      author_id = $(this).parent().attr('id');
-      console.log(author_id);    
+      author_id = $(this).parent().attr('id');      
       $('#update-author-form #id').attr('value', author_id);      
       $('#delete-author-form #id').attr('value', author_id);
+  }
+
+  /*UPDATE THE POEM'S NAME/ID FOR FORM*/
+  /*FORM DOES ACTUAL LOGIC*/
+  var update_poem_place = function() {
+      console.log("im heeereee")
+      clear_poem_forms();
+      /*now update everything*/      
+      poem_id = $(this).text();
+      $('#update-author-form #id').attr('value', poem_id);      
+      $('#delete-author-form #id').attr('value', poem_id);      
   }
 
   /*CLEAR POEM LIST*/
@@ -86,6 +111,14 @@ $(document).ready(function() {
 
     $('#delete-author-form #name').attr('value', '');
     $('#delete-author-form #id').attr('value', '');
+  }
+
+  var clear_poem_forms = function() {
+    $('#update-poem-form #name').attr('value', '');
+    $('#update-poem-form #id').attr('value', '');
+
+    $('#delete-poem-form #name').attr('value', '');
+    $('#delete-poem-form #id').attr('value', '');
   }
 
   /*BIND CLICKS*/
@@ -176,6 +209,7 @@ $(document).ready(function() {
       mask_again = document.createElement("div"),
       activeNav
     ;
+    
     mask.className = "mask";
     mask_again.className = "mask-again";
 
@@ -194,16 +228,16 @@ $(document).ready(function() {
       activeNav = "pmr-open";
     } );    
 
-    /* hide active menu if mask is clicked */
-    $('div').bind( "click", function(){
-      classie.remove( body, activeNav );
-      activeNav = "";      
-      $( "div" ).remove( ".mask" );
-      $( "div" ).remove( ".mask-again" );
-    } );
-
     /* hide active menu if close menu button is clicked */
     $('.close-menu').bind( "click", function(){        
+        classie.remove( body, activeNav );
+        activeNav = "";        
+        $( "div" ).remove( ".mask" );
+        $( "div" ).remove( ".mask-again" );
+    });
+
+    /* hide active menu if close menu button is clicked */
+    $('.close-menu-again').bind( "click", function(){        
         classie.remove( body, activeNav );
         activeNav = "";        
         $( "div" ).remove( ".mask" );

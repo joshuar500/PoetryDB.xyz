@@ -78,6 +78,10 @@ def delete_author():
         author_to_delete = session.query(Author).filter_by(id=author_id).one()
         session.delete(author_to_delete)
         session.commit()
+        # delete all poems associated with author
+        author_poems = session.query(Poem).filter_by(author_id=author_id).all()
+        session.delete(author_poems)
+        session.commit()
         flash("an author has been deleted")
         return redirect(url_for('back'))
     else:
@@ -103,6 +107,24 @@ def get_poem():
     poem = session.query(Poem).filter_by(id=poem_id).one()
     return jsonify(Poem=poem.serialize)
 
+
+# updates a poem by a specific author
+@app.route('/poem/update/', methods=['GET', 'POST'])
+def update_poem():
+    if request.method == 'POST':
+        new_name = request.form['name']
+        poem_id = request.form['id']
+
+        editedPoem = session.query(Poem).filter_by(id=poem_id).one()
+        editedPoem.name = new_name
+
+        session.add(editedPoem)
+        session.commit()
+        flash("poem name updated")
+        return redirect(url_for('back'))
+    else:
+        # this should return an error on the form
+        return render_template('index.html')
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'

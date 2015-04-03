@@ -114,7 +114,7 @@ section.toggle {
 
 div.menu-container {
     width:600px;
-    text-align: center;
+    text-align: left;
 }
 
 div.menu {
@@ -155,8 +155,8 @@ div.push-menu-right {
 }
 
 div.push-menu-right button {
-    display: block;
-    text-align: center;
+    display: inline-block;
+    text-align: left;
     border-bottom: solid 1px #e3e3e3;
     border-top: solid 1px #fff;
 }
@@ -378,4 +378,8 @@ body.pmb-open-again #wrapper {
 	body.pmr-open #wrapper {
 	  	left: -100%
 	}
+}
+
+div.menu a.update-poem-link {    
+    padding-left: .5em;
 }

@@ -6,6 +6,8 @@
 {% include "updateauthor.html" %}
 {% include "deleteauthor.html" %}
 
+{% include "updatepoem.html" %}
+
 <div class="menu-again push-menu-right-again">
     <button class="close-menu-again">Close &rarr;</button>
     <ol id="poem">    
@@ -39,6 +41,15 @@
 
     <div id="main">
         <div class="container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li><strong>{{message}}</strong></li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+            {% endwith %}
             <h1>Authors</h1>
             <a href="#add-author-form" class="popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
             <br /><br />
