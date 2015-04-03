@@ -20,7 +20,8 @@ $(document).ready(function() {
         });
     }
 
-    initMagPopup();
+  /*INITIALIZE MAGNIFIC POPUP*/
+  initMagPopup();
 
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
   var get_poems = function(e) {    
@@ -34,13 +35,7 @@ $(document).ready(function() {
     if(data !== null) {          
       $.each(data, function() {
         $.each(this, function(key, value){            
-            $('#poem-list').append('<button class="poem-link nav-toggler toggle-push-right-again" id="'+ value.id +'"><a href="#">' + value.name + '</a></button>' +                                    
-                                    '<a href="#update-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
-                                    '<i class="fa fa-pencil-square-o"><span style="display:none;">' + value.author_id + '</span></i>' +
-                                    '</a>' +
-                                    '<a href="#delete-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
-                                    '<i class="fa fa-times"><span style="display:none;">' + value.author_id + '</span></i>' +
-                                    '</a><br />');
+            $('#poem-list').append('<button class="poem-link nav-toggler toggle-push-right-again" id="'+ value.id +'"><a href="#">' + value.name + '</a></button><br />');
         });            
       });
         $('button.poem-link').bind('click', get_one_poem);    
@@ -51,6 +46,7 @@ $(document).ready(function() {
           }        
         });
 
+        /*RE INITIALIZE MAGNIFIC POPUP*/
         initMagPopup();        
 
         $('a.update-poem-link').bind('click', update_poem_place);       
@@ -67,11 +63,17 @@ $(document).ready(function() {
     }, display_poem);    
     return false;
   };
-  var display_poem = function(data) {    
+  var display_poem = function(data) {
+    clear_list();   
     if(data !== null) {          
-      $.each(data, function(key, value) {
-        console.log(value.id);
-        $('#poem').append('<span class = "fix-lines">' + value.the_poem + '<span>');        
+      $.each(data, function(key, value) {        
+        $('#poem').append('<span class = "fix-lines">' + value.the_poem + '<span>' +
+                          '<a href="#update-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
+                          '<i class="fa fa-pencil-square-o"><span style="display:none;">' + value.author_id + '</span></i>' +
+                          '</a>' +
+                          '<a href="#delete-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
+                          '<i class="fa fa-times"><span style="display:none;">' + value.author_id + '</span></i>' +
+                          '</a>');        
       });
       remove_classie_stuff();
     } else {
@@ -103,6 +105,7 @@ $(document).ready(function() {
   /*CLEAR POEM LIST*/
   var clear_list = function() {    
     $('#poem-list').empty();
+    $('#poem').empty();
   };
 
   var clear_author_forms = function() {
@@ -209,7 +212,7 @@ $(document).ready(function() {
       mask_again = document.createElement("div"),
       activeNav
     ;
-    
+
     mask.className = "mask";
     mask_again.className = "mask-again";
 
