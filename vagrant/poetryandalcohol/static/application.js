@@ -18,7 +18,7 @@ $(document).ready(function() {
             }
           }
         });
-    }
+    };
 
   /*INITIALIZE MAGNIFIC POPUP*/
   initMagPopup();
@@ -44,12 +44,7 @@ $(document).ready(function() {
           if (e.keyCode == 13) {
             get_one_poem(e);
           }        
-        });
-
-        /*RE INITIALIZE MAGNIFIC POPUP*/
-        initMagPopup();        
-
-        $('a.update-poem-link').bind('click', update_poem_place);       
+        });        
 
     } else {
       return false;
@@ -72,10 +67,14 @@ $(document).ready(function() {
                           '<i class="fa fa-pencil-square-o"><span style="display:none;">' + value.author_id + '</span></i>' +
                           '</a>' +
                           '<a href="#delete-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
-                          '<i class="fa fa-times"><span style="display:none;">' + value.author_id + '</span></i>' +
+                          '<i class="fa fa-times"></i>' +
                           '</a>');        
-      });
+      });      
+      initMagPopup();      
       remove_classie_stuff();
+
+      $('a.update-poem-link').bind('click', update_poem_place);
+
     } else {
       return false;
     }
@@ -89,18 +88,17 @@ $(document).ready(function() {
       author_id = $(this).parent().attr('id');      
       $('#update-author-form #id').attr('value', author_id);      
       $('#delete-author-form #id').attr('value', author_id);
-  }
+  };
 
   /*UPDATE THE POEM'S NAME/ID FOR FORM*/
   /*FORM DOES ACTUAL LOGIC*/
-  var update_poem_place = function() {
-      console.log("im heeereee")
+  var update_poem_place = function() {      
       clear_poem_forms();
       /*now update everything*/      
-      poem_id = $(this).text();
-      $('#update-author-form #id').attr('value', poem_id);      
-      $('#delete-author-form #id').attr('value', poem_id);      
-  }
+      poem_id = $('#poem').find('i').text();
+      $('#update-poem-form #id').attr('value', poem_id);
+      $('#delete-poem-form #id').attr('value', poem_id);      
+  };
 
   /*CLEAR POEM LIST*/
   var clear_list = function() {    
@@ -114,7 +112,7 @@ $(document).ready(function() {
 
     $('#delete-author-form #name').attr('value', '');
     $('#delete-author-form #id').attr('value', '');
-  }
+  };
 
   var clear_poem_forms = function() {
     $('#update-poem-form #name').attr('value', '');
@@ -122,37 +120,11 @@ $(document).ready(function() {
 
     $('#delete-poem-form #name').attr('value', '');
     $('#delete-poem-form #id').attr('value', '');
-  }
+  };
 
-  /*BIND CLICKS*/
-  $('button.author-link').bind('click', get_poems);    
-
-  $('button.author-link').bind('keydown', function(e) {
-    if (e.keyCode == 13) {
-      get_poems(e);
-    }
-  });
-
-  $('a.update-author-link').bind('click', update_author_place);
-
-
-/*!
-* classie v1.0.0
-* class helper functions
-* from bonzo https://github.com/ded/bonzo
-* MIT license
-* 
-* classie.has( elem, 'my-class' ) -> true/false
-* classie.add( elem, 'my-new-class' )
-* classie.remove( elem, 'my-unwanted-class' )
-* classie.toggle( elem, 'my-class' )
-*/
-
-/*jshint browser: true, strict: true, undef: true, unused: true */
-/*global define: false */
-
-  // class helper functions from bonzo https://github.com/ded/bonzo
-
+  /* class helper functions from bonzo 
+   * https://github.com/ded/bonzo 
+   */
   function classReg( className ) {
     return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
   }
@@ -191,60 +163,74 @@ $(document).ready(function() {
     fn( elem, c );
   }
 
-    var classie = {
-      // full names
-      hasClass: hasClass,
-      addClass: addClass,
-      removeClass: removeClass,
-      toggleClass: toggleClass,
-      // short names
-      has: hasClass,
-      add: addClass,
-      remove: removeClass,
-      toggle: toggleClass
-    };
-      /**
-     * The nav stuff
-     */
+  var classie = {
+    // full names
+    hasClass: hasClass,
+    addClass: addClass,
+    removeClass: removeClass,
+    toggleClass: toggleClass,
+    // short names
+    has: hasClass,
+    add: addClass,
+    remove: removeClass,
+    toggle: toggleClass
+  };
+  
+  /*
+   * The nav stuff
+   */
+  var body = document.body,
+    mask = document.createElement("div"),
+    mask_again = document.createElement("div"),
+    activeNav
+  ;
 
-    var body = document.body,
-      mask = document.createElement("div"),
-      mask_again = document.createElement("div"),
-      activeNav
-    ;
+  /* first mask is for poem list, 
+   * second mask is for individual poem 
+   */
+  mask.className = "mask";
+  mask_again.className = "mask-again";
 
-    mask.className = "mask";
-    mask_again.className = "mask-again";
+  var remove_classie_stuff = function() {      
+    classie.remove(body, activeNav);
+    activeNav = "";
+    classie.add( body, "pmr-open-again" );
+    document.body.appendChild(mask_again);
+    activeNav = "pmr-open-again";  
+  };
 
-    var remove_classie_stuff = function() {      
-      classie.remove(body, activeNav);
-      activeNav = "";
-      classie.add( body, "pmr-open-again" );
-      document.body.appendChild(mask_again);
-      activeNav = "pmr-open-again";  
+    /* author links when clicked will call get_poems function */
+  $('button.author-link').bind('click', get_poems);    
+
+  $('button.author-link').bind('keydown', function(e) {
+    if (e.keyCode == 13) {
+      get_poems(e);
     }
+  });
 
-    /* push menu right */
-    $('.toggle-push-right').bind( "click", function(){
-      classie.add( body, "pmr-open" );
-      document.body.appendChild(mask);
-      activeNav = "pmr-open";
-    } );    
+  $('a.update-author-link').bind('click', update_author_place);
 
-    /* hide active menu if close menu button is clicked */
-    $('.close-menu').bind( "click", function(){        
-        classie.remove( body, activeNav );
-        activeNav = "";        
-        $( "div" ).remove( ".mask" );
-        $( "div" ).remove( ".mask-again" );
-    });
+  /* push menu right when element class is clicked */
+  $('.toggle-push-right').bind( "click", function(){
+    classie.add( body, "pmr-open" );
+    document.body.appendChild(mask);
+    activeNav = "pmr-open";
+  } );    
 
-    /* hide active menu if close menu button is clicked */
-    $('.close-menu-again').bind( "click", function(){        
-        classie.remove( body, activeNav );
-        activeNav = "";        
-        $( "div" ).remove( ".mask" );
-        $( "div" ).remove( ".mask-again" );
-    });
+  /* hide active menu if close menu button is clicked */
+  $('.close-menu').bind( "click", function(){        
+      classie.remove( body, activeNav );
+      activeNav = "";        
+      $( "div" ).remove( ".mask" );
+      $( "div" ).remove( ".mask-again" );
+  });
+
+  /* hide active menu if close menu button is clicked */
+  $('.close-menu-again').bind( "click", function(){        
+      classie.remove( body, activeNav );
+      activeNav = "";        
+      $( "div" ).remove( ".mask" );
+      $( "div" ).remove( ".mask-again" );
+  });
 
 }); 

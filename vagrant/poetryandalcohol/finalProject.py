@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request,\
-                redirect, url_for, flash, jsonify
+    redirect, url_for, flash, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Author, Poem
@@ -113,14 +113,16 @@ def get_poem():
 def update_poem():
     if request.method == 'POST':
         new_name = request.form['name']
+        new_poem = request.form['the_poem']
         poem_id = request.form['id']
 
         editedPoem = session.query(Poem).filter_by(id=poem_id).one()
         editedPoem.name = new_name
+        editedPoem.the_poem = new_poem
 
         session.add(editedPoem)
         session.commit()
-        flash("poem name updated")
+        flash("poem name/entry updated")
         return redirect(url_for('back'))
     else:
         # this should return an error on the form
