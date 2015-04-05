@@ -128,6 +128,23 @@ def update_poem():
         # this should return an error on the form
         return render_template('index.html')
 
+
+# deletes an author and all poems from the database
+@app.route('/poem/delete/', methods=['GET', 'POST'])
+def delete_poem():
+    if request.method == 'POST':
+        poem_id = request.form['id']
+        poem_to_delete = session.query(Author).filter_by(id=poem_id).one()
+        session.delete(poem_to_delete)
+        session.commit()
+
+        flash("a poem has been deleted")
+        return redirect(url_for('back'))
+    else:
+        # this should return an error on the form
+        return render_template('index.html')
+
+
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
     app.debug = True
