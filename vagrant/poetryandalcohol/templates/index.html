@@ -9,14 +9,14 @@
 {% include "poem/updatepoem.html" %}
 {% include "poem/deletepoem.html" %}
 
-<div class="menu-again push-menu-right-again">
+<div class="menu-again push-menu-right-again buttons">
     <button class="close-menu-again">Close &rarr;</button>
     <ol id="poem">    
     </ol>    
 </div><!-- /push poem right -->
 
 <div class="menu push-menu-right">
-    <div class="menu-container">
+    <div class="menu-container buttons">
         <button class="close-menu">Close &rarr;</button>
         <ol id="poem-list">        
         </ol>
@@ -25,15 +25,9 @@
 
 <div id="wrapper">
     
-    <header>
-        <div class="branding">
-            <div class="container clearfix">
-                <div class="logo">                    
-                </div>                
-            </div>
-        </div><!-- /.branding -->
+    <header>        
         <div class="site-title">
-            <div class="container">
+            <div class="head-container">
                 <h1>Poetry and Alcohol</h1>
             </div>
         </div>
@@ -51,8 +45,8 @@
                 </ul>
                 {% endif %}
             {% endwith %}
-            <h1>Authors</h1>
-            <a href="#add-author-form" class="popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
+            <h1 class="authors-title" style="display:inline;">authors</h1>
+            <a href="#add-author-form" class="icon-link popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
             <br /><br />
             <div class="buttons">                
                 {% for a in authors %}
@@ -60,10 +54,10 @@
                 {{a.name}}
                 </button>
                 <span id="{{a.id}}" class="fa-links">
-                    <a href="#update-author-form" class="update-author-link popup-with-form open-popup-link">
+                    <a href="#update-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
                     <i class="fa fa-pencil-square-o"></i>
                     </a>
-                    <a href="#delete-author-form" class="update-author-link popup-with-form open-popup-link">
+                    <a href="#delete-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
                     <i class="fa fa-times"></i>
                     </a>
                 </span>
@@ -71,16 +65,12 @@
                 {% endfor %}
             </div><!-- /buttons -->
 
-            <section class="content">                
-                <!-- Maybe add content here -->
-            </section>
-
         </div>
     </div><!-- #main -->
 
 
     <footer>
-        <div class="container">
+        <div class="foot-container">
             <div class="clearfix">
                 
             </div>

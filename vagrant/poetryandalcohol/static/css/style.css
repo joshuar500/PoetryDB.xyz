@@ -4,7 +4,8 @@
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
 button {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: 300;
     font-size: 14px;
     cursor: pointer;
     border: none;
@@ -28,6 +29,7 @@ body {
 }
 
 #wrapper {
+    font-family: 'Roboto Condensed', sans-serif;
     position: relative;
     z-index: 10;
     top: 0;
@@ -38,25 +40,12 @@ body {
     -o-transition: all 0.3s;
     transition: all 0.3s;
 }
-section {
-    margin-bottom: 30px
+
+.site-title {
+    font-size: 1.8em;
+    font-family: 'Lovers Quarrel', cursive;
 }
-section h1 {
-    font-family: "Oswald", sans-serif;
-    margin-bottom: 10px;
-}
-section p {
-    margin-bottom: 30px
-}
-section p:last-child {
-    margin-bottom: 0
-}
-section:last-child {
-    margin-bottom: 0
-}
-section.toggle {
-    text-align: center
-}
+
 .mask {
     position: fixed;
     top: 0;
@@ -96,11 +85,11 @@ section.toggle {
     margin: 0 0 4px 0;
     padding: 15px 30px;
     color: #444;
-    background-color: #fff;    
+    background-color: #fff;
 }
 .buttons button:hover,
 .buttons button.active {
-    font-variant: small-caps;
+    font-style: italic;
 }
 .buttons button:focus {
     outline: none
@@ -110,6 +99,29 @@ section.toggle {
 |* Menus
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
+
+h1.authors-title {
+    padding-left: 25px;
+}
+
+/* general style for links with icons */
+
+a.icon-link {
+    color:#fff;
+}
+
+a.icon-link:hover {
+    color:#333;
+}
+
+.authors-title:hover ~ a.icon-link {
+    color: #333;
+}
+
+.author-link:hover + span.fa-links a.icon-link {
+    color: #333
+}
+
 /* general style for all menus */
 
 div.menu-container {
@@ -140,8 +152,7 @@ div.menu a {
 div.menu a:hover {    
     text-decoration: underline;
 }
-button.close-menu {
-    background-color: #eee;
+button.close-menu {    
     color: #444;
 }
 button.close-menu:focus {
@@ -157,8 +168,6 @@ div.push-menu-right {
 div.push-menu-right button {
     display: inline-block;
     text-align: left;
-    border-bottom: solid 1px #e3e3e3;
-    border-top: solid 1px #fff;
 }
 
 div.push-menu-right button:first-child {
@@ -177,9 +186,8 @@ div.push-menu-right button a {
 
 div.push-menu-right button.close-menu {
     margin: 10px 0;
-    padding: 10px 30px;
-    background-color: #3184a1;
-    color: #fff;
+    padding: 10px 30px;    
+    color: #333;
 }
 
 div.slide-menu-right,
@@ -231,8 +239,7 @@ div.menu-again a {
 div.menu-again a:hover {    
     text-decoration: underline;
 }
-button.close-menu-again {
-    background-color: #eee;
+button.close-menu-again {    
     color: #444;
 }
 button.close-menu-again:focus {
@@ -248,8 +255,6 @@ div.push-menu-right-again {
 div.push-menu-right-again li {
     display: block;
     text-align: center;
-    border-bottom: solid 1px #e3e3e3;
-    border-top: solid 1px #fff;
 }
 
 div.push-menu-right-again li:first-child {
@@ -268,9 +273,8 @@ div.push-menu-right-again a {
 
 div.push-menu-right-again button.close-menu-again {
     margin: 10px 0;
-    padding: 10px 30px;
-    background-color: #3184a1;
-    color: #fff;
+    padding: 10px 30px;    
+    color: #333;
 }
 
 div.slide-menu-right-again,
