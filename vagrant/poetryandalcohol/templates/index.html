@@ -2,11 +2,12 @@
 {% block body %}
 <body id="super-body">
 
-{% include "addauthor.html" %}
-{% include "updateauthor.html" %}
-{% include "deleteauthor.html" %}
+{% include "author/addauthor.html" %}
+{% include "author/updateauthor.html" %}
+{% include "author/deleteauthor.html" %}
 
-{% include "updatepoem.html" %}
+{% include "poem/updatepoem.html" %}
+{% include "poem/deletepoem.html" %}
 
 <div class="menu-again push-menu-right-again">
     <button class="close-menu-again">Close &rarr;</button>

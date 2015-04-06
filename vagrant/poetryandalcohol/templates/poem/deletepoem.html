@@ -1,0 +1,19 @@
+<!-- Delete Poem Modal -->
+  <!-- form to delete poem -->
+  <form id="delete-poem-form" class="mfp-hide white-popup-block white-popup" action="{{url_for('delete_poem')}}" method="post">
+    <h1>WARNING</h1>
+    <fieldset style="border:0;">      
+      <ol>
+        <li>
+          This will delete the poem.
+          <input id="id" name="id" type="hidden">
+        </li>
+        <li>
+          <a href="{{ url_for('back') }}">Cancel</a>
+          <input type="submit" value="Continue">
+        </li>
+      </ol>
+    </fieldset>
+  </form>
+  </p>
+<!-- / end delete poem modal -->
