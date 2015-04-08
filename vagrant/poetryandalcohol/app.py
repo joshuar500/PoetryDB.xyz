@@ -134,7 +134,7 @@ def update_poem():
 def delete_poem():
     if request.method == 'POST':
         poem_id = request.form['id']
-        poem_to_delete = session.query(Author).filter_by(id=poem_id).one()
+        poem_to_delete = session.query(Poem).filter_by(id=poem_id).one()
         session.delete(poem_to_delete)
         session.commit()
 
