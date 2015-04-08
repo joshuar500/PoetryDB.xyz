@@ -31,7 +31,7 @@ $(document).ready(function() {
     return false;
   };
   var update_poem_list = function(data) {    
-    clear_list();
+    clear_poem_list();
     if(data !== null) {          
       $.each(data, function() {
         $.each(this, function(key, value){            
@@ -59,16 +59,16 @@ $(document).ready(function() {
     return false;
   };
   var display_poem = function(data) {
-    clear_list();   
+    clear_poem();   
     if(data !== null) {          
       $.each(data, function(key, value) {        
-        $('#poem').append('<span class = "fix-lines">' + value.the_poem + '<span>' +
-                          '<a href="#update-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
+        $('#poem').append('<span class="fix-lines">' + value.the_poem + '</span>' +
+                          '<span class="poem-icons"><a href="#update-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
                           '<i class="fa fa-pencil-square-o"><span style="display:none;">' + value.author_id + '</span></i>' +
                           '</a>' +
                           '<a href="#delete-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
                           '<i class="fa fa-times"></i>' +
-                          '</a>');        
+                          '</a></span>');        
       });      
       initMagPopup();      
       remove_classie_stuff();
@@ -101,8 +101,11 @@ $(document).ready(function() {
   };
 
   /*CLEAR POEM LIST*/
-  var clear_list = function() {    
-    $('#poem-list').empty();
+  var clear_poem_list = function() {    
+    $('#poem-list').empty();    
+  };
+  
+    var clear_poem = function() {        
     $('#poem').empty();
   };
 
@@ -191,8 +194,7 @@ $(document).ready(function() {
   mask.className = "mask";
   mask_again.className = "mask-again";
 
-  var remove_classie_stuff = function() {      
-    classie.remove(body, activeNav);
+  var remove_classie_stuff = function() {    
     activeNav = "";
     classie.add( body, "pmr-open-again" );
     document.body.appendChild(mask_again);
@@ -219,7 +221,7 @@ $(document).ready(function() {
 
   /* hide active menu if close menu button is clicked */
   $('.close-menu').bind( "click", function(){        
-      classie.remove( body, activeNav );
+      classie.remove( body, "pmr-open" );
       activeNav = "";        
       $( "div" ).remove( ".mask" );
       $( "div" ).remove( ".mask-again" );
@@ -227,7 +229,7 @@ $(document).ready(function() {
 
   /* hide active menu if close menu button is clicked */
   $('.close-menu-again').bind( "click", function(){        
-      classie.remove( body, activeNav );
+      classie.remove( body, "pmr-open-again" );
       activeNav = "";        
       $( "div" ).remove( ".mask" );
       $( "div" ).remove( ".mask-again" );

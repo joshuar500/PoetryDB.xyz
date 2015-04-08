@@ -83,7 +83,7 @@ body {
 .buttons button {
     display: inline-block;
     margin: 0 0 4px 0;
-    padding: 15px 30px;
+    padding-left: 30px;
     color: #444;
     background-color: #fff;
 }
@@ -122,9 +122,18 @@ a.icon-link:hover {
     color: #333
 }
 
+.poem-icons {
+    display: inline;
+}
+
 /* general style for all menus */
 
 div.menu-container {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
     width:600px;
     text-align: left;
 }
@@ -159,10 +168,9 @@ button.close-menu:focus {
     outline: none
 }
 /* slide menu left and right, push menu left and right */
-div.push-menu-right {
-    top: 0;
+div.push-menu-right {    
     width: 80%;
-    height: 100%;
+    height: 100%;    
 }
 
 div.push-menu-right button {
@@ -186,7 +194,7 @@ div.push-menu-right button a {
 
 div.push-menu-right button.close-menu {
     margin: 10px 0;
-    padding: 10px 30px;    
+    padding-left: 30px;    
     color: #333;
 }
 
@@ -203,14 +211,14 @@ body.pml-open #wrapper {
     left: 100%;
 }
 body.pmr-open #wrapper {
-    left: -100%;
+    left: 0;
 }
  
 body.pmt-open #wrapper {
     top: 100px
 }
 body.pmb-open #wrapper {
-    top: -100px
+    top: 0
 }
 
 /* push it right again */
@@ -246,9 +254,8 @@ button.close-menu-again:focus {
     outline: none
 }
 /* slide menu left and right, push menu left and right */
-div.push-menu-right-again {
-    top: 0;
-    width: 80%;
+div.push-menu-right-again {    
+    width: 50%;
     height: 100%;
 }
 
@@ -273,8 +280,9 @@ div.push-menu-right-again a {
 
 div.push-menu-right-again button.close-menu-again {
     margin: 10px 0;
-    padding: 10px 30px;    
+    padding-left:0px;  
     color: #333;
+    text-align: left;
 }
 
 div.slide-menu-right-again,
@@ -290,14 +298,14 @@ body.pml-open-again #wrapper {
     left: 200%;
 }
 body.pmr-open-again #wrapper {
-    left: -200%;
+    left: 0
 }
  
 body.pmt-open-again #wrapper {
     top: 100px
 }
 body.pmb-open-again #wrapper {
-    top: -100px
+    top: 0
 }
 
 /* ------------------------------------------------------------ *\
@@ -325,7 +333,7 @@ body.pmb-open-again #wrapper {
 	  	display: none
 	}
 	.buttons button {
-	  	padding: 10px 20px
+	  	padding: 0
 	}
 }
 @media all and (max-width: 660px) { 
