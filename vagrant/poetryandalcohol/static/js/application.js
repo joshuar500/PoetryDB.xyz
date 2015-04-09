@@ -1,7 +1,11 @@
 $(document).ready(function() {
 
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
-  var get_poems = function(e) {    
+  var get_poems = function(e) {
+    var id = $(this).attr('id');
+    console.log('blah : ' + id);
+    update_poem_place(id);
+
     $.getJSON($SCRIPT_ROOT + '/get_author_poems', {
       author_id: $(this).attr('id')
     }, update_poem_list);
@@ -21,7 +25,7 @@ $(document).ready(function() {
             $('#poem-list').append('<button class="poem-link nav-toggler toggle-push-right-again" id="'+ value.id +'"><a href="#">' + value.name + '</a></button><br />');
         });            
       });
-    $('#poem-list').append('<a href="#add-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
+    $('#poem-list').append('<a href="#add-poem-form" class="popup-with-form open-popup-link">' +
                           '<i class="fa fa-plus"></i>' +
                           '</a></span>');
     initMagPopup();    
@@ -70,11 +74,10 @@ $(document).ready(function() {
 
   /*UPDATE THE POEM'S NAME/ID FOR FORM*/
   /*FORM DOES ACTUAL LOGIC*/
-  var update_poem_place = function() {      
+  var update_poem_place = function(author_id) {      
       clear_poem_forms();
       /*now update everything*/      
-      poem_id = $('#poem').find('i').text();
-      author_id = $('#poem-list').find('span').text();
+      poem_id = $('#poem').find('i').text();      
       console.log(poem_id);
       console.log(author_id);
       $('#add-poem-form #author_id').attr('value', author_id);

@@ -115,6 +115,8 @@ def add_poem():
         new_poem_name = request.form['name']
         new_poem_text = request.form['the_poem']
         author_id = request.form['author_id']
+        print new_poem_text
+        print author_id
         new_poem = Poem(name=new_poem_name,
                         the_poem=new_poem_text,
                         author_id=author_id)
