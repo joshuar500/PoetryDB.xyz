@@ -1,0 +1,22 @@
+<!-- Add Poem Modal -->
+  <!-- form to add poem -->
+  <form id="add-poem-form" class="mfp-hide white-popup-block white-popup" action="{{url_for('add_poem')}}" method="post">
+    <h1>Add Poem</h1>
+    <fieldset style="border:0;">      
+      <ol>
+        <li>          
+          <label for="name">Poem Name: </label>
+          <input id="name" name="name" required="" type="text"><br />
+          <label for="the_poem">The Poem: </label>
+          <textarea id="the_poem" name="the_poem">
+          </textarea>
+          <input id="author_id" name="author_id" type="hidden">
+        </li>
+        <li>
+          <input type="submit" value="Create">
+        </li>
+      </ol>
+    </fieldset>
+  </form>
+  </p>
+<!-- / end add poem modal -->

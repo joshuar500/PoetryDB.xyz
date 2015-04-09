@@ -108,6 +108,25 @@ def get_poem():
     return jsonify(Poem=poem.serialize)
 
 
+# adds an author to the database
+@app.route('/poem/new/', methods=['GET', 'POST'])
+def add_poem():
+    if request.method == 'POST':
+        new_poem_name = request.form['name']
+        new_poem_text = request.form['the_poem']
+        author_id = request.form['author_id']
+        new_poem = Poem(name=new_poem_name,
+                        the_poem=new_poem_text,
+                        author_id=author_id)
+        session.add(new_poem)
+        session.commit()
+        flash("new poem added")
+        return redirect(url_for('back'))
+    else:
+        # this should return an error on the form
+        return render_template('index.html')
+
+
 # updates a poem by a specific author
 @app.route('/poem/update/', methods=['GET', 'POST'])
 def update_poem():
