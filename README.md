@@ -7,3 +7,5 @@ Web app that queries a db for poems from authors and then dynamically generates 
 Make sure you have Vagrant installed. cd into folder and `vagrant up`
 
 ### Technology
+Vagrant
+Flask
