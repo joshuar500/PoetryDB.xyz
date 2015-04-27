@@ -112,7 +112,7 @@ $(document).ready(function() {
     $('#delete-poem-form #id').attr('value', '');
   };
 
-  var initClickBinds = function() {
+  var initClickBinds = function() {    
 
     /* author links when clicked will call get_poems function */
     $('button.author-link').bind('click', get_poems);    
@@ -146,7 +146,14 @@ $(document).ready(function() {
         activeNav = "";        
         $( "div" ).remove( ".mask" );
         $( "div" ).remove( ".mask-again" );
-    });        
+    });
+
+    /* init slimscroll for authors */
+    $('#author-scroll').slimScroll({
+        height: '350px',
+        width: '250px'
+    });
+
   };
 
   initClickBinds.update_poem_clicks = function() {

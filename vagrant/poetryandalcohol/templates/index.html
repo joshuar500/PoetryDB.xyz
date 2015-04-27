@@ -51,21 +51,23 @@
             <h1 class="authors-title" style="display:inline;">authors</h1>
             <a href="#add-author-form" class="icon-link popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
             <br /><br />
-            <div class="buttons">                
-                {% for a in authors %}
-                <button id="{{a.id}}" class="nav-toggler toggle-push-right author-link">
-                {{a.name}}
-                </button>
-                <span id="{{a.id}}" class="fa-links">
-                    <a href="#update-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
-                    <i class="fa fa-pencil-square-o"></i>
-                    </a>
-                    <a href="#delete-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
-                    <i class="fa fa-times"></i>
-                    </a>
-                </span>
-                <br />
-                {% endfor %}
+            <div class="buttons">
+                <div id="author-scroll">                
+                    {% for a in authors %}
+                    <button id="{{a.id}}" class="nav-toggler toggle-push-right author-link">
+                    {{a.name}}
+                    </button>
+                    <span id="{{a.id}}" class="fa-links">
+                        <a href="#update-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
+                        <i class="fa fa-pencil-square-o"></i>
+                        </a>
+                        <a href="#delete-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
+                        <i class="fa fa-times"></i>
+                        </a>
+                    </span>
+                    <br />
+                    {% endfor %}
+                </div>
             </div><!-- /buttons -->
 
         </div>
