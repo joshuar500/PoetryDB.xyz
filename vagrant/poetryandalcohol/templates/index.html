@@ -10,32 +10,58 @@
 {% include "poem/updatepoem.html" %}
 {% include "poem/deletepoem.html" %}
 
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Poetry Database</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <div class="col-sm-3 col-md-3">
+        <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <button type="button" class="btn btn-default navbar-btn">Sign in</button>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
 <div class="menu-again push-menu-right-again">
-    <div class="menu-container buttons">
+    <div class="menu-container buttons" style="top:30%;">
         <button class="close-menu-again">Close &rarr;</button>
-        <div id="poem">    
-        </div>        
+        <div id="poem">
+        </div>
     </div>
 </div><!-- /push poem right -->
 
 <div class="menu push-menu-right">
     <div class="menu-container buttons">
         <button class="close-menu">Close &rarr;</button>
-        <ol id="poem-list">        
+        <ol id="poem-list">
         </ol>
     </div>
 </div><!-- /push poem list right -->
 
 <div id="wrapper">
-    
-    <header>        
-        <div class="site-title">
-            <div class="head-container">
-                <h1>Poetry and Alcohol</h1>
-            </div>
-        </div>
-    </header>
-
 
     <div id="main">
         <div class="container">
@@ -48,27 +74,31 @@
                 </ul>
                 {% endif %}
             {% endwith %}
-            <h1 class="authors-title" style="display:inline;">authors</h1>
-            <a href="#add-author-form" class="icon-link popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
-            <br /><br />
-            <div class="buttons">
-                <div id="author-scroll">                
-                    {% for a in authors %}
-                    <button id="{{a.id}}" class="nav-toggler toggle-push-right author-link">
-                    {{a.name}}
-                    </button>
-                    <span id="{{a.id}}" class="fa-links">
-                        <a href="#update-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
-                        <i class="fa fa-pencil-square-o"></i>
-                        </a>
-                        <a href="#delete-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
-                        <i class="fa fa-times"></i>
-                        </a>
-                    </span>
-                    <br />
-                    {% endfor %}
-                </div>
-            </div><!-- /buttons -->
+            <div class="row">
+              <h1 class="authors-title" style="display:inline;">authors</h1>
+              <a href="#add-author-form" class="icon-link popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
+              <br /><br />
+              <div class="buttons">
+                  <div id="author-scroll">
+                      {% for a in authors %}
+                      <button id="{{a.id}}" class="nav-toggler toggle-push-right author-link">
+                      {{a.name}}
+                      </button>
+                      {% if creator != 'no-user-sup-widdit' %}
+                      <span id="{{a.id}}" class="fa-links">
+                          <a href="#update-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
+                          <i class="fa fa-pencil-square-o"></i>
+                          </a>
+                          <a href="#delete-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
+                          <i class="fa fa-times"></i>
+                          </a>
+                      </span>
+                      {% endif %}
+                      <br />
+                      {% endfor %}
+                  </div>
+              </div><!-- /buttons -->
+            </div>
 
         </div>
     </div><!-- #main -->
@@ -77,7 +107,7 @@
     <footer>
         <div class="foot-container">
             <div class="clearfix">
-                
+
             </div>
             <div class="copyright">
                 <span>

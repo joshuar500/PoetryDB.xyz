@@ -9,12 +9,23 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 
 
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
+
+
 class Author(Base):
 
     __tablename__ = 'author'
 
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -31,6 +42,8 @@ class Alcohol(Base):
 
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -53,6 +66,8 @@ class Poem(Base):
     alcohol = relationship(Alcohol)
     author_id = Column(Integer, ForeignKey('author.id'))
     author = relationship(Author)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):

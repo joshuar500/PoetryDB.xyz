@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from database_setup import Base, Author, Poem, Alcohol
+from database_setup import Base, Author, Poem, Alcohol, User
 
 engine = create_engine('sqlite:///poetryandalcohol.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -18,19 +18,25 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
+# Create dummy user
+User1 = User(name="Robo Barista", email="tinnyTim@udacity.com",
+             picture='https://pbs.twimg.com/profile_images/2671170543/18debd694829ed78203a5a36dd364160_400x400.png')
+session.add(User1)
+session.commit()
 
 # Author 1
-author1 = Author(name="Ezra Pound")
+author1 = Author(name="Ezra Pound", user_id=1)
 
 session.add(author1)
 session.commit()
 
-alcohol1 = Alcohol(name="Whisky")
+alcohol1 = Alcohol(user_id=1, name="Whisky")
 
 session.add(alcohol1)
 session.commit()
 
 poem1 = Poem(
+    user_id=1,
     name="In a Station of the Metro",
     the_poem="THE apparition of these faces in the crowd;\nPetals on a wet, black bough.",
     alcohol=alcohol1,
