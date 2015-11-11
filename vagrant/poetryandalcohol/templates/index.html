@@ -1,123 +1,125 @@
-{% extends "layout.html" %}
-{% block body %}
-<body id="super-body">
+<!DOCTYPE html>
+<html lang="en" class="no-js">
 
-{% include "author/addauthor.html" %}
-{% include "author/updateauthor.html" %}
-{% include "author/deleteauthor.html" %}
+<head>
 
-{% include "poem/addpoem.html" %}
-{% include "poem/updatepoem.html" %}
-{% include "poem/deletepoem.html" %}
+<!-- title and meta -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="description" content="A demonstration of the common scenario requiring CSS equal height columns with three elegant and pure CSS solutions." />
+<title>CSS Equal Height Columns, Three Different Ways</title>
 
-<nav class="navbar navbar-default" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">Poetry Database</a>
-  </div>
+<!-- css -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Bitter:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome/font-awesome.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Profile</a></li>
-      <li><a href="#">About</a></li>
-    </ul>
-    <div class="col-sm-3 col-md-3">
-        <form class="navbar-form" role="search">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" name="q">
-            <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+<!-- js -->
+
+
+</head>
+
+
+
+<body class="demo-1">
+
+<div class="wrapper">
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand hidden-xs" href="#">PoetryDB</a>
+         <a class="navbar-brand visible-xs" href="#">PDB</a>
+         <form class="navbar-form pull-left" role="search">
+            <div class="input-group">
+               <input type="text" class="form-control" placeholder="Search">
+               <div class="input-group-btn">
+                  <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+               </div>
             </div>
-        </div>
-        </form>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <button type="button" class="btn btn-default navbar-btn">Sign in</button>
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</nav>
+         </form>
+      </div>
+      <div class="navbar-collapse collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#login">Login</a></li>
+         </ul>
+      </div>
+      <!--/.navbar-collapse -->
+   </div>
+</div>
 
-<div class="menu-again push-menu-right-again">
-    <div class="menu-container buttons" style="top:30%;">
-        <button class="close-menu-again">Close &rarr;</button>
-        <div id="poem">
-        </div>
-    </div>
-</div><!-- /push poem right -->
-
-<div class="menu push-menu-right">
-    <div class="menu-container buttons">
-        <button class="close-menu">Close &rarr;</button>
-        <ol id="poem-list">
-        </ol>
-    </div>
-</div><!-- /push poem list right -->
-
-<div id="wrapper">
-
-    <div id="main">
+<header>
+    <div class="large-spacing">
         <div class="container">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
+            <h1>&nbsp;</h1>
+        </div>
+    </div><!-- /.site-title -->
+</header>
+
+<div class="main">
+    <div class="container clearfix">
+        <div id="authors" class="content">
+            <section>
+                <h1>Authors</h1>
+                <hr>
                 <ul>
-                {% for message in messages %}
-                    <li><strong>{{message}}</strong></li>
-                {% endfor %}
+                  {% for a in authors %}
+                  <li><a id="{{a.id}}" class="author-link" href="#poem-list">{{a.name}}</a></li>
+                  {% endfor %}
                 </ul>
-                {% endif %}
-            {% endwith %}
-            <div class="row">
-              <h1 class="authors-title" style="display:inline;">authors</h1>
-              <a href="#add-author-form" class="icon-link popup-with-form open-popup-link"><i class="fa fa-user-plus"></i></a>
-              <br /><br />
-              <div class="buttons">
-                  <div id="author-scroll">
-                      {% for a in authors %}
-                      <button id="{{a.id}}" class="nav-toggler toggle-push-right author-link">
-                      {{a.name}}
-                      </button>
-                      {% if creator != 'no-user-sup-widdit' %}
-                      <span id="{{a.id}}" class="fa-links">
-                          <a href="#update-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
-                          <i class="fa fa-pencil-square-o"></i>
-                          </a>
-                          <a href="#delete-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
-                          <i class="fa fa-times"></i>
-                          </a>
-                      </span>
-                      {% endif %}
-                      <br />
-                      {% endfor %}
-                  </div>
-              </div><!-- /buttons -->
-            </div>
-
+            </section>
         </div>
-    </div><!-- #main -->
-
-
-    <footer>
-        <div class="foot-container">
-            <div class="clearfix">
-
-            </div>
-            <div class="copyright">
-                <span>
-                    &copy; 2015, Josh Rincon<br>
-                    <a href="http://joshrincon.com" target="_blank">joshrincon.com</a>
-                </span>
-            </div>
+        <div id="poem-list" class="content-middle">
+            <section>
+                <h1>Poems</h1>
+                <hr>
+                <ol id="poem-list">
+                </ol>
+            </section>
         </div>
-    </footer><!-- /footer -->
+        <div id="poem-single" class="sidebar">
+            <aside>
+                <h2>DickButt by Joshua Rincon</h2>
+                Sign up to the newsletter!
+            </aside>
+        </div>
+    </div>
+</div><!-- #main -->
+
+<footer>
+    <div class="container">
+        <div class="clearfix">
+        <div class="copyright">
+            <span>
+                &copy; 2016, Joshua Rincon<br>
+                <a href="http://joshrincon.com">joshrincon.com</a>
+            </span>
+        </div>
+    </div>
+</footer><!-- /footer -->
 
 </div><!-- /#wrapper -->
+
+<script src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.slimscroll.min.js') }}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
 </body>
-{% endblock %}
+</html>

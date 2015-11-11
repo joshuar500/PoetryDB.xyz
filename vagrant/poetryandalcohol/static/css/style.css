@@ -1,330 +1,99 @@
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
+|* Navbar
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+
+@media(max-width:767px) {
+    .navbar .navbar-form {
+        width: 185px;
+        padding-left:0;
+        padding-right:0;
+    }
+}
+@media(min-width:768px) {
+    .navbar .navbar-form {
+        width: 250px;
+    }
+}
+.navbar .navbar-form {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-right: 0;
+    margin-left: 0;
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
 |* Globals
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
-button {
-    font-family: "Roboto Condensed", sans-serif;
-    font-weight: 300;
-    font-size: 14px;
-    cursor: pointer;
+h1 {
+    font-size: 40px
+}
+h2 {
+    margin-bottom: 10px
+}
+hr {
+    margin: 30px 0;
     border: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+    height: 1px;
+    background-color: #c8c8c8;
+}
+p {
+    margin-bottom: 30px
+}
+p:last-child {
+    margin-bottom: 0
+}
+.large-spacing {
+  padding-top:100px
 }
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
-|* Template
+|* Demo 1
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
-body {
-    overflow-x: hidden
+section {
+  border-top: 10px solid;
+  border-color: #555;
 }
-
-#super-body {
-  margin:0;
+aside {
+  border-top: 10px solid;
+  border-color: #555;
 }
-
-#wrapper {
-    font-family: 'Roboto Condensed', sans-serif;
-    position: relative;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -ms-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
+.demo-1 .main .container {
+    padding: 0 360px 0 30px;
+    overflow: hidden
 }
-
-.site-title {
-    font-size: 1.8em;
-    font-family: 'Lovers Quarrel', cursive;
+.demo-1 .content {
+    float: left;
+    text-align: right;
+    width: 45%;
+    background-color: #fff
 }
-
-.mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -15;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
+.demo-1 .content-middle {
+    float: left;
+    width: 45%;
+    margin-left: 55px;
+    background-color: #fff
 }
-
-.mask-again {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -25;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
+.demo-1 .sidebar {
+    float: right;
+    margin-right: -330px;
+    width: 300px;
+    background-color: #fff
 }
-
-.fix-lines {
-    white-space: pre-line;
-    white-space: pre-wrap;
+.demo-1 .content,
+.demo-1 .sidebar {
+    padding-bottom: 99999px;
+    margin-bottom: -99999px;
 }
-
-/* ------------------------------------------------------------ *\
-|* ------------------------------------------------------------ *|
-|* Toggle Buttons
-|* ------------------------------------------------------------ *|
-\* ------------------------------------------------------------ */
-.buttons {
-    margin-bottom: 30px;
-    text-align: left;
-}
-.buttons button {
-    display: inline-block;
-    margin: 0 0 4px 0;
-    padding-left: 30px;
-    color: #444;
-    background-color: #fff;
-}
-.buttons button:hover,
-.buttons button.active {
-    font-style: italic;
-}
-.buttons button:focus {
-    outline: none
-}
-/* ------------------------------------------------------------ *\
-|* ------------------------------------------------------------ *|
-|* Menus
-|* ------------------------------------------------------------ *|
-\* ------------------------------------------------------------ */
-
-h1.authors-title {
-    padding-left: 25px;
-}
-
-/* general style for links with icons */
-
-a.icon-link {
-    color:#fff;
-}
-
-a.icon-link:hover {
-    color:#333;
-}
-
-.authors-title:hover ~ a.icon-link {
-    color: #333;
-}
-
-.author-link:hover + span.fa-links a.icon-link {
-    color: #333
-}
-
-.poem-icons {
-    display: inline;
-}
-
-/* general style for all menus */
-
-div.menu-container {
-    position: relative;
-    top: 35%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    width:600px;
-    text-align: left;
-}
-
-div.menu {
-    position: fixed;
-    z-index: 20;
-    background-color: #fff;
-    overflow: hidden;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -ms-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-}
-div.menu ol {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-div.menu a {
-    font-weight: 300;
-    color: #444;
-}
-div.menu a:hover {
-    text-decoration: underline;
-}
-button.close-menu {
-    color: #444;
-}
-button.close-menu:focus {
-    outline: none
-}
-/* slide menu left and right, push menu left and right */
-div.push-menu-right {
-    width: 66%;
-    height: 100%;
-}
-
-div.push-menu-right button {
-    display: inline-block;
-    text-align: left;
-}
-
-div.push-menu-right button:first-child {
-    border-top: none
-}
-
-div.push-menu-right button:last-child {
-    border-bottom: none
-}
-
-div.push-menu-right button a {
-    display: block;
-    padding: 10px;
-    font-size: 18px;
-}
-
-div.push-menu-right button.close-menu {
-    margin: 10px 0;
-    padding-left: 30px;
-    color: #333;
-}
-
-div.slide-menu-right,
-div.push-menu-right {
-    right: -100%;
-}
-
-body.smr-open div.slide-menu-right,
-body.pmr-open div.push-menu-right {
-    right: 0
-}
-body.pml-open #wrapper {
-    left: 100%;
-}
-body.pmr-open #wrapper {
-    left: 0;
-}
-
-body.pmt-open #wrapper {
-    top: 100px
-}
-body.pmb-open #wrapper {
-    top: 0
-}
-
-/* push it right again */
-
-div.menu-again {
-    position: fixed;
-    z-index: 40;
-    background-color: #fff;
-    overflow: hidden;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -ms-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
-div.menu-again ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-div.menu-again a {
-    font-weight: 300;
-    color: #444;
-}
-div.menu-again a:hover {
-    text-decoration: underline;
-}
-button.close-menu-again {
-    color: #444;
-}
-button.close-menu-again:focus {
-    outline: none
-}
-/* slide menu left and right, push menu left and right */
-div.push-menu-right-again {
-    width: 40%;
-    height: 100%;
-}
-
-div.push-menu-right-again li {
-    display: block;
-    text-align: center;
-}
-
-div.push-menu-right-again li:first-child {
-    border-top: none
-}
-
-div.push-menu-right-again li:last-child {
-    border-bottom: none
-}
-
-div.push-menu-right-again a {
-    display: inline;
-    padding: 10px;
-    font-size: 18px;
-}
-
-div.push-menu-right-again button.close-menu-again {
-    margin: 10px 0;
-    padding-left:0px;
-    color: #333;
-    text-align: left;
-}
-
-div.slide-menu-right-again,
-div.push-menu-right-again {
-    right: -100%;
-}
-
-body.smr-open-again div.slide-menu-right-again,
-body.pmr-open-again div.push-menu-right-again {
-    right: 0
-}
-body.pml-open-again #wrapper {
-    left: 100%;
-}
-body.pmr-open-again #wrapper {
-    left: 0
-}
-
-body.pmt-open-again #wrapper {
-    top: 100px
-}
-body.pmb-open-again #wrapper {
-    top: 0
-}
-
-/* ------------------------------------------------------------ *\
-|* ------------------------------------------------------------ *|
-|* Form
-|* ------------------------------------------------------------ *|
-\* ------------------------------------------------------------ */
-
-.white-popup {
-    position: relative;
-    background: #fff;
-    padding: 20px;
-    width: auto;
-    max-width: 500px;
-    margin: 20px auto;
+.demo-1 section,
+.demo-1 aside {
+    padding: 30px
 }
 
 /* ------------------------------------------------------------ *\
@@ -332,70 +101,33 @@ body.pmb-open-again #wrapper {
 |* Media Queries
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
-@media all and (max-width: 860px) {
-	.buttons br {
-	  	display: none
-	}
-	.buttons button {
-	  	padding: 0
-	}
-}
-@media all and (max-width: 660px) {
-	/* slide menu top and bottom */
-	div.slide-menu-top ul,
-	div.slide-menu-bottom ul,
-	div.push-menu-top ul,
-	div.push-menu-bottom ul {
-	  	padding: 35px 0 0 0
-	}
-	div.slide-menu-top a,
-	div.slide-menu-bottom a,
-	div.push-menu-top a,
-	div.push-menu-bottom a {
-	  	line-height: 30px;
-	  	padding: 0 2px;
-	  	font-size: 12px;
-	}
-	div.slide-menu-top button.close-menu,
-	div.slide-menu-bottom button.close-menu,
-	div.push-menu-top button.close-menu,
-	div.push-menu-bottom button.close-menu {
-	  	line-height: 30px;
-	  	padding: 0 2px;
-	}
-}
-@media all and (max-width: 330px) {
-	div.slide-menu-left,
-	div.slide-menu-right,
-	div.push-menu-left,
-	div.push-menu-right {
-	  	top: 0;
-	  	width: 100%;
-	}
-	div.slide-menu-left,
-	div.push-menu-left {
-	  	left: -100%
-	}
-	div.slide-menu-right,
-	div.push-menu-right {
-	  	right: -100%
-	}
-	body.sml-open div.slide-menu-left,
-	body.pml-open div.push-menu-left {
-	  	left: 0
-	}
-	body.smr-open div.slide-menu-right,
-	body.pmr-open div.push-menu-right {
-	  	right: 0
-	}
-	body.pml-open #wrapper {
-	  	left: 100%
-	}
-	body.pmr-open #wrapper {
-	  	left: -100%
-	}
-}
-
-div.menu a.update-poem-link {
-    padding-left: .5em;
+@media all and (max-width: 840px) {
+  .demo-1 .main .container {
+      padding: 0 30px;
+      overflow: visible;
+  }
+  .demo-1 .content {
+    text-align: left;
+      width: 100%;
+      float: none
+  }
+  .demo-1 .content-middle {
+      width: 100%;
+      margin-left: 0;
+      float: none
+  }
+  .demo-1 .sidebar {
+      margin-top: 30px;
+      float: none;
+      margin-right: 0;
+      width: 100%;
+  }
+  .demo-1 .content,
+  .demo-1 .sidebar {
+      padding-bottom: 0;
+      margin-bottom: 0;
+  }
+  .demo-1 .content {
+      margin-bottom: 30px
+  }
 }

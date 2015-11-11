@@ -64,7 +64,7 @@ tfoot,
 thead,
 tr,
 th,
-td {    
+td {
     background: transparent;
     border: 0;
     margin: 0;
@@ -119,8 +119,8 @@ a img {
     box-sizing: border-box;
 }
 body {
-    background-color: #fff;
-    color: #333;
+    background-color: #eee;
+    color: #505050;
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
     font-size: 14px;
@@ -134,14 +134,15 @@ h4,
 h5,
 h6 {
     line-height: 1;
-    font-weight: 400;
+    font-weight: 700;
+    font-family: "Bitter", serif;
 }
 a {
     text-decoration: none;
-    color: #333;
+    color: #282828;
 }
 a:hover {
-    color: #eee;
+    color: #020202
 }
 /* clear floated divs */
 .clearfix:after {
@@ -154,60 +155,117 @@ a:hover {
 |* Template
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
-#wrapper {  
+.wrapper {
     width: 100%;
     margin: 0 auto;
 }
-#main {
-    background-color: #fff;
-    width: 100%;
-    padding: 30px 0;    
+.main {
+    background-color: #eee
 }
-
-.head-container {
+.container {
     width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin: 0 auto;    
-}
-
-.foot-container {
-    width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin: 0 auto; 
-    text-align: left;  
-}
-
-.container {    
-    width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin: 0 auto;    
-    margin-top: 100px;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 0 30px;
-    text-align: left;
 }
-
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Info Bar
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+.info-bar {
+    background-color: #020202;
+    text-align: center;
+}
+.info-bar a.icon {
+    margin: 0 5px;
+    padding: 10px 0;
+    color: #fff;
+    font-size: 20px;
+    position: relative;
+}
+.info-bar a.icon[data-title]:hover:after {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 20px;
+    content: attr(data-title);
+    padding: 5px 10px;
+    background-color: #020202;
+    font-family: "Open Sans", sans-serif;
+    color: #fff;
+    font-size: 12px;
+    white-space: nowrap;
+}
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
 |* Header
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
-header {
-    padding: 30px 0
+header .branding {
+    padding: 30px 0;
+    background-color: #282828;
 }
-#title {
-    text-align: center
+header .branding .container {
+    padding: 0 30px 0 90px
 }
-#title h1 {
+header .social {
+    float: left;
+    width: 100%;
+    height: 60px;
+    text-align: right;
+    line-height: 60px;
+}
+header .social a {
+    display: inline-block;
+    text-indent: -9999px;
+    font-size: 0;
+    margin: 15px 0;
+    width: 30px;
+    height: 30px;
+    background-size: 30px 30px;
+    margin-left: 5px;
+    background-image: url("../img/icons-svg/social.png");
+    background: url("../img/icons-svg/social.svg");
+    background-size: 180px 30px;
+}
+header .social a.fb {
+    background-position: 0 0
+}
+header .social a.twitter {
+    background-position: -30px 0
+}
+header .social a.googleplus {
+    background-position: -60px 0
+}
+header .social a.rss {
+    background-position: -90px 0
+}
+header .social a.email {
+    background-position: -120px 0
+}
+header .social a.search {
+    background-position: -150px 0
+}
+header .social a:hover {
+    opacity: 0.4
+}
+header .logo {
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin-left: -60px;
+}
+header .site-title {
+    background-color: #020202;
+    padding: 10px 30px;
+    text-align: center;
+}
+header .site-title h1 {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
     color: #fff;
-    font-size: 30px;
-    margin-bottom: 10px;
-}
-#title h2 {
-    color: #eee;
-    font-size: 20px;
 }
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
@@ -215,32 +273,93 @@ header {
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
 footer {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-    padding: 30px 0;
+    padding: 30px 0
+}
+footer .container {
+    padding: 0 30px
+}
+footer aside {
+    width: 33.3333%;
+    float: left;
+}
+footer aside.logo {
+    text-align: right
+}
+footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+footer ul a {
+    color: #fff
+}
+footer ul a:hover {
+    color: #5b5b5b
+}
+footer .copyright {
+    margin-top: 30px;
     text-align: center;
-    background-color: #fff;
 }
-footer span {
+footer .copyright span {
     color: #333
 }
-footer span a {
-    color: #333
+footer .copyright a {
+    color: #5b5b5b
 }
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
 |* Media Queries
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
-@media all and (max-width: 600px) { 
-  #info-bar a {
-      display: block
+@media all and (max-width: 960px) {
+  /* footer */
+  footer aside {
+      width: 100%;
+      float: none;
+      margin-bottom: 15px;
   }
-  #title h1 {
-      font-size: 20px
+  footer aside:last-child {
+      margin-bottom: 0
   }
-  #title h2 {
-      font-size: 16px
+  footer aside.logo {
+      text-align: center
+  }
+  footer ul {
+      text-align: center
+  }
+  footer ul li {
+      display: inline-block
+  }
+  footer ul li:after {
+      content: "\2022"
+  }
+  footer ul li:last-child:after {
+      content: none
+  }
+  footer ul li a {
+      margin: 0 10px
+  }
+}
+@media all and (max-width: 400px) {
+  header .branding {
+      padding: 15px 0
+  }
+  header .branding .container {
+      padding: 0 30px
+  }
+  header .social {
+      float: none;
+      width: 100%;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+  }
+  header .social a {
+      margin: 0 5px
+  }
+  header .logo {
+      float: none;
+      margin: 0 auto;
+      margin-bottom: 15px;
   }
 }
