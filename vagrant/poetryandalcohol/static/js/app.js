@@ -24,7 +24,7 @@ $(document).ready(function() {
               $('#poem-list').append('<span style="display:none;">' + value.author_id + '</span>');
               i += 1;
             }
-            $('#poem-list').append('<button class="poem-link nav-toggler toggle-push-right-again" id="'+ value.id +'"><a href="#">' + value.name + '</a></button><br />');
+            $('#poem-list').append('<a class="poem-link" id="'+ value.id +'" href="#">' + value.name + '</a><br />');
         });
       });
     $('#poem-list').append('<a href="#add-poem-form" class="popup-with-form open-popup-link">' +
@@ -174,9 +174,9 @@ $(document).ready(function() {
   initClickBinds.update_poem_clicks = function() {
     $('a.update-poem-link').bind('click', update_poem_place);
 
-    $('button.poem-link').bind('click', get_one_poem);
+    $('a.poem-link').bind('click', get_one_poem);
 
-    $('button.poem-link').bind('keydown', function(e) {
+    $('a.poem-link').bind('keydown', function(e) {
       if (e.keyCode == 13) {
         get_one_poem(e);
       }

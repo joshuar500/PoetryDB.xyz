@@ -5,9 +5,10 @@
 
 <!-- title and meta -->
 <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="description" content="A demonstration of the common scenario requiring CSS equal height columns with three elegant and pure CSS solutions." />
-<title>CSS Equal Height Columns, Three Different Ways</title>
+<title>poetrydb.xyz - A Poetry Database</title>
 
 <!-- css -->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
@@ -17,12 +18,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
-<!-- js -->
-
-
 </head>
-
-
 
 <body class="demo-1">
 
@@ -51,11 +47,35 @@
          <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#login">Login</a></li>
+         </ul>
+         <ul class="nav navbar-nav navbar-right">
+             <li><a data-toggle="modal" data-target="#loginModal">
+             <span class="glyphicon glyphicon-log-in"></span> Login</a>
+             </li>
          </ul>
       </div>
       <!--/.navbar-collapse -->
    </div>
+</div>
+
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Login </h4>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+
+                      {% include "etc/login.html" %}
+
+                      <button type="button" class="btn btn-default form-control" data-dismiss="modal">Cancel</button>
+                    </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <header>
@@ -79,7 +99,7 @@
                 </ul>
             </section>
         </div>
-        <div id="poem-list" class="content-middle">
+        <div id="asdf" class="content-middle">
             <section>
                 <h1>Poems</h1>
                 <hr>
@@ -90,7 +110,9 @@
         <div id="poem-single" class="sidebar">
             <aside>
                 <h2>DickButt by Joshua Rincon</h2>
-                Sign up to the newsletter!
+                <div id="poem">
+
+                </div>
             </aside>
         </div>
     </div>
@@ -116,9 +138,39 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.slimscroll.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
 
 <script type="text/javascript">
+  /* Create variable $SCRIPT_ROOT for framework */
   var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+  function signInCallback(authResult) {
+    if (authResult['code']) {
+      // Hide the sign-in button now that the user is authorized
+      $('#signinButton').attr('style', 'display: none');
+      // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+      $.ajax({
+        type: 'POST',
+        url: '/gconnect?state={{STATE}}',
+        processData: false,
+        data: authResult['code'],
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          // Handle or verify the server response if necessary.
+          if (result) {
+            $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+           setTimeout(function() {
+            window.location.href = "/";
+           }, 4000);
+
+        } else if (authResult['error']) {
+      console.log('There was an error: ' + authResult['error']);
+    } else {
+          $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+           }
+        }
+
+    }); } }
 </script>
 
 </body>

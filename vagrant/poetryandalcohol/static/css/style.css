@@ -51,6 +51,10 @@ p:last-child {
 .large-spacing {
   padding-top:100px
 }
+.fix-lines {
+    white-space: pre-line;
+    white-space: pre-wrap;
+}
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
 |* Demo 1
@@ -71,19 +75,19 @@ aside {
 .demo-1 .content {
     float: left;
     text-align: right;
-    width: 45%;
+    width: 35%;
     background-color: #fff
 }
 .demo-1 .content-middle {
     float: left;
     width: 45%;
-    margin-left: 55px;
+    margin-left: 45px;
     background-color: #fff
 }
 .demo-1 .sidebar {
     float: right;
     margin-right: -330px;
-    width: 300px;
+    width: 400px;
     background-color: #fff
 }
 .demo-1 .content,
