@@ -9,6 +9,7 @@ import random, string
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
+from oauth2client.client import AccessTokenCredentials
 import httplib2
 import json
 import requests
@@ -37,6 +38,7 @@ def showLogin():
 def gconnect():
     # Validate state token
     if request.args.get('state') != login_session['state']:
+        print "THE INVALID BITCH NIGGAA"
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -137,7 +139,7 @@ def getUserInfo(user_id):
     return user
 
 
-def getUserID(email):
+def getUserId(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
@@ -149,7 +151,10 @@ def getUserID(email):
 @app.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
-    credentials = login_session.get('credentials')
+    credentials = AccessTokenCredentials(login_session['credentials'],
+                                         'user-agent-value')
+
+    print 'HEAJSKHDLKAJSHDLKSJH HEY FUCKERRRRRRR'
 
     if credentials is None:
         response = make_response(
@@ -157,7 +162,7 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    access_token = credentials
+    access_token = credentials.access_token
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
@@ -176,6 +181,7 @@ def gdisconnect():
         return response
     else:
         # For whatever reason, the given token was invalid.
+        # Change this because of P3P policy. Stupid fucking thing.
         response = make_response(
             json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
@@ -195,17 +201,17 @@ def back():
 # set up index route
 @app.route('/')
 def authors():
+    #Create State
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
+    login_session['state'] = state
     authors = session.query(Author).all()
-    if 'username' not in login_session:
-        # there's gotta be a better way than to embed an if statement in the html
-        # to prevent users from accessing the edit buttons
-        creator = "no-user-sup-widdit"
-        print "logged in as" + creator
-        return render_template('index.html', authors=authors, creator=creator)
-    elif 'username' in login_session:
-        creator = login_session['username']
+    if 'email' not in login_session:
+        return render_template('index.html', authors=authors, STATE=state)
+    elif 'email' in login_session:
+        creator = login_session['email']
         print "logged in aszzzzzz" + creator
-        return render_template('index.html', authors=authors, creator=creator)
+        return render_template('index.html', authors=authors, STATE=state, creator=creator)
     else:
         return redirect('/login')
 

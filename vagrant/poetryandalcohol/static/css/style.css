@@ -25,6 +25,9 @@
     -webkit-box-shadow: none;
     box-shadow: none
 }
+#login:hover {
+  cursor: pointer
+}
 /* ------------------------------------------------------------ *\
 |* ------------------------------------------------------------ *|
 |* Globals
@@ -134,4 +137,30 @@ aside {
   .demo-1 .content {
       margin-bottom: 30px
   }
+}
+
+#signInButton {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  background: #4285f4;
+  color: white;
+  width: 190px;
+  margin-top:10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+#signInButton:hover {
+  cursor: pointer;
+}
+span.g-signin {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 42px;
+  padding-right: 42px;
+  font-size: 14px;
+  font-weight: bold;
+  /* Use the Roboto font that is loaded in the <head> */
+  font-family: 'Roboto', sans-serif;
 }

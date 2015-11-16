@@ -27,9 +27,6 @@ $(document).ready(function() {
             $('#poem-list').append('<a class="poem-link" id="'+ value.id +'" href="#">' + value.name + '</a><br />');
         });
       });
-    $('#poem-list').append('<a href="#add-poem-form" class="popup-with-form open-popup-link">' +
-                          '<i class="fa fa-plus"></i>' +
-                          '</a></span>');
     initMagPopup();
     initClickBinds.update_poem_clicks();
     } else {
@@ -51,13 +48,7 @@ $(document).ready(function() {
     clear_poem();
     if(data !== null) {
       $.each(data, function(key, value) {
-        $('#poem').append('<span class="fix-lines">' + value.the_poem + '</span><br />' +
-                          '<span class="poem-icons"><a href="#update-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
-                          '<i class="fa fa-pencil-square-o"><span style="display:none;">' + value.id + '</span></i>' +
-                          '</a>' +
-                          '<a href="#delete-poem-form" class="update-poem-link popup-with-form open-popup-link">' +
-                          '<i class="fa fa-times"></i>' +
-                          '</a></span>');
+        $('#poem').append('<h2>' + value.name + '</h2><span class="fix-lines">' + value.the_poem + '</span><br />');
       });
       initMagPopup();
       remove_classie_stuff();

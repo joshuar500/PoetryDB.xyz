@@ -47,35 +47,93 @@
          <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
+            {% if creator is defined %}
+            <li class="dropdown" style="margin-right:10px">
+              <a class="dropdown-toggle" aria-expanded="false" role="button" data-toggle="dropdown" href="#"><i class="fa fa-plus"></i></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="#add-author" data-toggle="modal" data-target="#addAuthor">Add Author</a>
+                </li>
+                <li>
+                  <a href="#add-poem" data-toggle="modal" data-target="#addPoem">Add Poem</a>
+                </li>
+              </ul>
+            </li>
+            {% endif %}
          </ul>
+         {% if creator is undefined %}
          <ul class="nav navbar-nav navbar-right">
-             <li><a data-toggle="modal" data-target="#loginModal">
+             <li><a id="login" data-toggle="modal" data-target="#loginModal">
              <span class="glyphicon glyphicon-log-in"></span> Login</a>
              </li>
          </ul>
+         {% endif %}
       </div>
       <!--/.navbar-collapse -->
    </div>
 </div>
 
 <div id="loginModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-sm">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Login </h4>
             </div>
-            <div class="modal-body">
-                    <div class="form-group">
-
-                      {% include "etc/login.html" %}
-
-                      <button type="button" class="btn btn-default form-control" data-dismiss="modal">Cancel</button>
-                    </div>
+            <div class="modal-body text-center center-block">
+              <div id="signInButton">
+                <span class="g-signin"
+                  data-scope="openid email"
+                  data-clientid="1006406991652-n8j3ou5e4sje06mena7iq3ol33eep8te.apps.googleusercontent.com"
+                  data-redirecturi="postmessage"
+                  data-accesstype="offline"
+                  data-cookiepolicy="single_host_origin"
+                  data-callback="signInCallback"
+                  data-approvalprompt="force">Google+ Sign In
+                </span>
+              </div>
+              <div id="result"></div>
+              <button type="button" class="btn btn-default form-control" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
+</div>
+
+<div id="addAuthor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addAuthorLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Author</h4>
+      </div>
+      <div class="modal-body">
+        Some input here!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="addPoem" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addPoemLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Poem</h4>
+      </div>
+      <div class="modal-body">
+        Some input here!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <header>
@@ -109,7 +167,6 @@
         </div>
         <div id="poem-single" class="sidebar">
             <aside>
-                <h2>DickButt by Joshua Rincon</h2>
                 <div id="poem">
 
                 </div>
@@ -133,12 +190,12 @@
 </div><!-- /#wrapper -->
 
 <script src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
 <script src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.slimscroll.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-<script src="//apis.google.com/js/platform.js?onload=start"> </script>
 
 <script type="text/javascript">
   /* Create variable $SCRIPT_ROOT for framework */
@@ -148,6 +205,7 @@
     if (authResult['code']) {
       // Hide the sign-in button now that the user is authorized
       $('#signinButton').attr('style', 'display: none');
+      $('#loginModal').modal('hide')
       // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
       $.ajax({
         type: 'POST',
