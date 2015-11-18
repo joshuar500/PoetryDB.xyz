@@ -119,6 +119,7 @@ a img {
     box-sizing: border-box;
 }
 body {
+    background: url('../img/bg.jpg');
     background-color: #eee;
     color: #505050;
     font-family: "Open Sans", sans-serif;
@@ -160,7 +161,7 @@ a:hover {
     margin: 0 auto;
 }
 .main {
-    background-color: #eee
+    
 }
 .container {
     width: 100%;

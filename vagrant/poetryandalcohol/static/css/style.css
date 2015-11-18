@@ -66,10 +66,14 @@ p:last-child {
 section {
   border-top: 10px solid;
   border-color: #555;
+  height: 500px;
+  max-height: 500px;
 }
 aside {
   border-top: 10px solid;
   border-color: #555;
+  height: 500px;
+  max-height: 500px;
 }
 .demo-1 .main .container {
     padding: 0 360px 0 30px;
