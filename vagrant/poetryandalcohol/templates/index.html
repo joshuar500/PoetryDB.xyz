@@ -34,14 +34,14 @@
          </button>
          <a class="navbar-brand hidden-xs" href="#">PoetryDB</a>
          <a class="navbar-brand visible-xs" href="#">PDB</a>
-         <form class="navbar-form pull-left" role="search">
+         <!--<form class="navbar-form pull-left" role="search">
             <div class="input-group">
                <input type="text" class="form-control" placeholder="Search">
                <div class="input-group-btn">
                   <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                </div>
             </div>
-         </form>
+         </form>-->
       </div>
       <div class="navbar-collapse collapse">
          <ul class="nav navbar-nav navbar-right">
@@ -63,8 +63,11 @@
          </ul>
          {% if creator is undefined %}
          <ul class="nav navbar-nav navbar-right">
-             <li><a id="login" data-toggle="modal" data-target="#loginModal">
-             <span class="glyphicon glyphicon-log-in"></span> Login</a>
+             <li>
+               <a id="login" data-toggle="modal" data-target="#loginModal">
+                 <span class="glyphicon glyphicon-log-in"></span> Login
+               </a>
+               <span id="#loginResult"></span>
              </li>
          </ul>
          {% endif %}
@@ -161,14 +164,28 @@
     </div>
   </div>
 </div>
-
-<header>
-    <div class="large-spacing">
+    
+    <header class="jumbotron">
         <div class="container">
-            <h1>&nbsp;</h1>
+        <div class="row">
+            <div class="col-md-12">
+            <div class="jumbotron text-center">
+            <h2>Welcome to Poetry.xyz</h2>
+            <form>
+                <div class="col-md-6 col-md-offset-3 form-group">
+                    <div class="input-group input-group-lg">
+                    <input class="form-control" placeholder="Type in author, poem, or tag" type="text">
+                    <span class="input-group-addon">Search</span>
+                </div>
+                </div>
+            </form>
+            <br>
+            </div>
         </div>
-    </div><!-- /.site-title -->
-</header>
+        </div>
+        </div>
+    </header>
+
 
 <div class="main">
     <div class="container clearfix">
@@ -242,10 +259,10 @@
         success: function(result) {
           // Handle or verify the server response if necessary.
           if (result) {
-            $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+            $('#loginResult').html('Login Successful!</br>'+ result + '</br>Redirecting...')
            setTimeout(function() {
             window.location.href = "/";
-           }, 4000);
+          }, 3000);
 
         } else if (authResult['error']) {
       console.log('There was an error: ' + authResult['error']);
