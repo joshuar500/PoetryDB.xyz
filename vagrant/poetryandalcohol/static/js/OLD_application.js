@@ -3,7 +3,7 @@ $(document).ready(function() {
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
   var get_poems = function(e) {
     var id = $(this).attr('id');
-    console.log('blah : ' + id);
+    console.log('blasdfasdfah : ' + id);
     update_poem_place(id);
 
     $.getJSON($SCRIPT_ROOT + '/get_author_poems', {

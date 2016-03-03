@@ -8,7 +8,6 @@ from sqlalchemy import create_engine
 # Create base class that our classes will inherit
 Base = declarative_base()
 
-
 class User(Base):
     __tablename__ = 'user'
 

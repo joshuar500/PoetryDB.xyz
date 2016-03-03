@@ -2,8 +2,7 @@ $(document).ready(function() {
 
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
   var get_poems = function(e) {
-    var id = $(this).attr('id');
-    console.log('blah : ' + id);
+    var id = $(this).attr('id');    
     update_poem_place(id);
 
     $.getJSON($SCRIPT_ROOT + '/get_author_poems', {
@@ -14,6 +13,7 @@ $(document).ready(function() {
 
 
   var update_poem_list = function(data) {
+    clear_poem();
     clear_poem_list();
     var i = 0;
     if(data !== null) {

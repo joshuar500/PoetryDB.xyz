@@ -175,6 +175,7 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
+        del login_session['admin']
 
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
@@ -209,6 +210,13 @@ def authors():
     if 'email' not in login_session:
         return render_template('index.html', authors=authors, STATE=state)
     elif 'email' in login_session:
+        user_id = getUserId(login_session['email'])
+        print user_id
+        print user_id
+        print user_id
+        print user_id
+        print user_id
+        print user_id
         creator = login_session['email']
         print "logged in aszzzzzz" + creator
         return render_template('index.html', authors=authors, STATE=state, creator=creator)
@@ -231,9 +239,20 @@ def add_author():
         session.add(new_author)
         session.commit()
         flash("new author created")
+        print "NEW AUTHOR YAY"
+        print "NEW AUTHOR YAY"
+        print "NEW AUTHOR YAY"
+        print "NEW AUTHOR YAY"
+        print "NEW AUTHOR YAY"
+        print "NEW AUTHOR YAY"
         return redirect(url_for('back'))
     else:
         # this should return an error on the form
+        print "NO AUTHOR WAAAAAA"
+        print "NO AUTHOR WAAAAAA"
+        print "NO AUTHOR WAAAAAA"
+        print "NO AUTHOR WAAAAAA"
+        print "NO AUTHOR WAAAAAA"
         return render_template('index.html')
 
 
