@@ -39,7 +39,7 @@ $(document).ready(function() {
   var get_one_poem = function(e) {
     $.getJSON($SCRIPT_ROOT + '/get_poem', {
       poem_id: $(this).attr('id')
-    }, display_poem);
+    }, display_poem);    
     return false;
   };
 
@@ -47,12 +47,13 @@ $(document).ready(function() {
   var display_poem = function(data) {
     clear_poem();
     if(data !== null) {
-      $.each(data, function(key, value) {
-        $('#poem').append('<h2>' + value.name + '</h2><span class="fix-lines">' + value.the_poem + '</span><br />');
-      });
-      initMagPopup();
-      remove_classie_stuff();
-      initClickBinds.update_poem_clicks();
+        /* init slimscroll for poem */        
+        $.each(data, function(key, value) {
+            $('#poem').append('<h2>' + value.name + '</h2><span class="fix-lines">' + value.the_poem + '</span><br />');
+        });
+        initMagPopup();
+        remove_classie_stuff();
+        initClickBinds.update_poem_clicks();        
     } else {
       return false;
     }
@@ -128,41 +129,42 @@ $(document).ready(function() {
     $('a.update-author-link').bind('click', update_author_place);
 
 
-    /* push menu right when element class is clicked */
-    $('.toggle-push-right').bind( "click", function(){
-      classie.add( body, "pmr-open" );
-      document.body.appendChild(mask);
-      activeNav = "pmr-open";
-    } );
+    // /* push menu right when element class is clicked */
+    // $('.toggle-push-right').bind( "click", function(){
+    //   classie.add( body, "pmr-open" );
+    //   document.body.appendChild(mask);
+    //   activeNav = "pmr-open";
+    // } );
 
 
-    /* hide active menu if close menu button is clicked */
-    $('.close-menu').bind( "click", function(){
-        classie.remove( body, "pmr-open" );
-        activeNav = "";
-        $( "div" ).remove( ".mask" );
-        $( "div" ).remove( ".mask-again" );
-    });
+    // /* hide active menu if close menu button is clicked */
+    // $('.close-menu').bind( "click", function(){
+    //     classie.remove( body, "pmr-open" );
+    //     activeNav = "";
+    //     $( "div" ).remove( ".mask" );
+    //     $( "div" ).remove( ".mask-again" );
+    // });
 
 
-    /* hide active menu if close menu button is clicked */
-    $('.close-menu-again').bind( "click", function(){
-        classie.remove( body, "pmr-open-again" );
-        activeNav = "";
-        $( "div" ).remove( ".mask" );
-        $( "div" ).remove( ".mask-again" );
-    });
-
-
-    /* init slimscroll for authors */
-    $('#author-scroll').slimScroll({
-        height: '350px',
-        width: '250px'
-    });
+    // /* hide active menu if close menu button is clicked */
+    // $('.close-menu-again').bind( "click", function(){
+    //     classie.remove( body, "pmr-open-again" );
+    //     activeNav = "";
+    //     $( "div" ).remove( ".mask" );
+    //     $( "div" ).remove( ".mask-again" );
+    // });        
+    
   };
 
 
   initClickBinds.update_poem_clicks = function() {
+    $('#poem').slimScroll({
+        height: 'auto',
+        width: '350px',
+        size: '5px',
+        railOpacity: 0.1
+    });
+    
     $('a.update-poem-link').bind('click', update_poem_place);
 
     $('a.poem-link').bind('click', get_one_poem);
@@ -171,7 +173,7 @@ $(document).ready(function() {
       if (e.keyCode == 13) {
         get_one_poem(e);
       }
-    });
+    });        
   };
 
   var initMagPopup = function() {

@@ -84,11 +84,11 @@ aside {
   border-top: 10px solid;
   border-color: #555;
   height: 500px;
-  max-height: 500px;
+  max-height: 500px;  
 }
 .demo-1 .main .container {
     padding: 0 360px 0 30px;
-    overflow: hidden
+    overflow: hidden;
 }
 .demo-1 .content {
     float: left;
@@ -105,8 +105,8 @@ aside {
 .demo-1 .sidebar {
     float: right;
     margin-right: -330px;
-    width: 400px;
-    background-color: #fff
+    width: 400px;    
+    background-color: #fff;    
 }
 .demo-1 .content,
 .demo-1 .sidebar {
