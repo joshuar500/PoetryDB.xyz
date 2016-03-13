@@ -34,6 +34,71 @@ def showLogin():
     return render_template('/etc/login.html', STATE=state)
 
 
+@app.route('/fbconnect', methods=['POST'])
+def fbconnect():
+    if request.args.get('state') != login_session['state']:
+        response = make_response(json.dumps('Invalid state parameter.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    access_token = request.data    
+
+    app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
+        'web']['app_id']
+    app_secret = json.loads(
+        open('fb_client_secrets.json', 'r').read())['web']['app_secret']
+    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
+        app_id, app_secret, access_token)
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[1]
+
+    # Use token to get user info from API
+    userinfo_url = "https://graph.facebook.com/v2.4/me"
+    # strip expire tag from access token
+    token = result.split("&")[0]
+
+
+    url = 'https://graph.facebook.com/v2.4/me?%s&fields=name,id,email' % token
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[1]
+    # print "url sent for API access:%s"% url
+    # print "API JSON result: %s" % result
+    data = json.loads(result)
+    login_session['provider'] = 'facebook'
+    login_session['username'] = data["name"]
+    login_session['email'] = data["email"]
+    login_session['facebook_id'] = data["id"]
+
+    # The token must be stored in the login_session in order to properly logout, let's strip out the information before the equals sign in our token
+    stored_token = token.split("=")[1]
+    login_session['access_token'] = stored_token
+
+    # Get user picture
+    url = 'https://graph.facebook.com/v2.4/me/picture?%s&redirect=0&height=200&width=200' % token
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[1]
+    data = json.loads(result)
+
+    login_session['picture'] = data["data"]["url"]
+
+    # see if user exists
+    user_id = getUserId(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
+    output = ''
+    output += '<h1>Welcome, '
+    output += login_session['username']
+
+    output += '!</h1>'
+    output += '<img src="'
+    output += login_session['picture']
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+
+    flash("Now logged in as %s" % login_session['username'])
+    return output
+        
+
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token
@@ -102,6 +167,7 @@ def gconnect():
 
     data = answer.json()
 
+    login_session['provider'] = 'google'
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
@@ -120,8 +186,7 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
-    print "done!"
-    return output
+    return output   
 
 
 # User Helper Functions
@@ -148,14 +213,28 @@ def getUserId(email):
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
+@app.route('/fbdisconnect')
+def fbdisconnect():
+    facebook_id = login_session['facebook_id']
+    # The access token must me included to successfully logout
+    access_token = login_session['access_token']
+    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id,access_token)
+    h = httplib2.Http()
+    result = h.request(url, 'DELETE')[1]
+    del login_session['facebook_id']
+    del login_session['username']
+    del login_session['email']
+    del login_session['picture']
+    del login_session['user_id']
+    del login_session['provider']
+    return "you have been logged out" 
+    
+
 @app.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
     credentials = AccessTokenCredentials(login_session['credentials'],
-                                         'user-agent-value')
-
-    print 'HEAJSKHDLKAJSHDLKSJH HEY FUCKERRRRRRR'
-
+                                         'user-agent-value')    
     if credentials is None:
         response = make_response(
             json.dumps('Current user not connected.'), 401)
@@ -175,7 +254,8 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
-        del login_session['admin']
+        if 'admin' in login_session:
+            del login_session['admin']
 
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
@@ -187,6 +267,27 @@ def gdisconnect():
             json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+        
+        
+# Disconnect based on provider
+@app.route('/disconnect')
+def disconnect():
+    print "disconnectingghakljshd"
+    if 'provider' in login_session:
+        print "next"
+        if login_session['provider'] == 'google':
+            print "gdisconnect"
+            gdisconnect()
+            flash("You have successfully been logged out.")
+            return redirect(url_for('authors'))
+        if login_session['provider'] == 'facebook':
+            print "fbdisconnect"
+            fbdisconnect()            
+            flash("You have successfully been logged out.")
+            return redirect(url_for('authors'))
+    else:
+        flash("You were not logged in")
+        return redirect(url_for('authors'))        
 
 
 # redirects the user to the index page
@@ -205,54 +306,44 @@ def authors():
     #Create State
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
+    print state
     login_session['state'] = state
     authors = session.query(Author).all()
-    if 'email' not in login_session:
+    if 'email' not in login_session:        
+        print "EMAISDLKASHF"
         return render_template('index.html', authors=authors, STATE=state)
-    elif 'email' in login_session:
-        user_id = getUserId(login_session['email'])
-        print user_id
-        print user_id
-        print user_id
-        print user_id
-        print user_id
-        print user_id
-        creator = login_session['email']
-        print "logged in aszzzzzz" + creator
+    elif 'email' in login_session:        
+        user_id = getUserId(login_session['email'])        
+        creator = login_session['email']        
         return render_template('index.html', authors=authors, STATE=state, creator=creator)
     else:
         return redirect('/login')
-
-
-# queries all authors and returns JSON
-@app.route('/authors/JSON')
-def authors_JSON():
-    authors = session.query(Author).all()
-    return jsonify(Authors=[a.serialize for a in authors])
 
 
 # adds an author to the database
 @app.route('/authors/new/', methods=['GET', 'POST'])
 def add_author():
     if request.method == 'POST':
-        new_author = Author(name=request.form['name'])
-        session.add(new_author)
-        session.commit()
-        flash("new author created")
-        print "NEW AUTHOR YAY"
-        print "NEW AUTHOR YAY"
-        print "NEW AUTHOR YAY"
-        print "NEW AUTHOR YAY"
-        print "NEW AUTHOR YAY"
-        print "NEW AUTHOR YAY"
-        return redirect(url_for('back'))
+        #if author exists, do not create new author
+        all_authors = session.query(Author).all()
+        new_author = request.form['name']
+        #fix this for multiple rows check
+        exists = session.query(Author.name).filter_by(name=new_author).scalar() is not None
+        print new_author
+        print new_author
+        print new_author
+        print new_author
+        if exists:
+            print "Author exists widdit"
+            return redirect(url_for('back'))
+        else:
+            new_author = Author(name=new_author)            
+            session.add(new_author)
+            session.commit()
+            print "Author CREATED"            
+            return redirect(url_for('back'))
     else:
         # this should return an error on the form
-        print "NO AUTHOR WAAAAAA"
-        print "NO AUTHOR WAAAAAA"
-        print "NO AUTHOR WAAAAAA"
-        print "NO AUTHOR WAAAAAA"
-        print "NO AUTHOR WAAAAAA"
         return render_template('index.html')
 
 
@@ -307,7 +398,6 @@ def get_author_poems():
 # returns a single poem in json for jquery update
 @app.route('/get_poem')
 def get_poem():
-    print "IM HERE"
     poem_id = request.args.get('poem_id', 0, type=int)
     poem = session.query(Poem).filter_by(id=poem_id).one()
     return jsonify(Poem=poem.serialize)
@@ -320,8 +410,6 @@ def add_poem():
         new_poem_name = request.form['name']
         new_poem_text = request.form['the_poem']
         author_id = request.form['author_id']
-        print new_poem_text
-        print author_id
         new_poem = Poem(name=new_poem_name,
                         the_poem=new_poem_text,
                         author_id=author_id)
@@ -369,6 +457,27 @@ def delete_poem():
     else:
         # this should return an error on the form
         return render_template('index.html')
+
+
+#########
+#### API ENDPOINTS
+#########
+
+# queries all authors and returns JSON
+@app.route('/authors/JSON')
+def authors_JSON():
+    authors = session.query(Author).all()
+    return jsonify(Authors=[a.serialize for a in authors])
+    
+@app.route('/authors/<int:author_id>/poems/JSON')
+def authors_poems_JSON(author_id):
+    poems = session.query(Poem).filter_by(author_id=author_id)
+    return jsonify(Poem=[p.serialize for p in poems])
+        
+# @app.route('/authors/<int:author_id>/poems/<int:poem_id>/JSON')
+# def poem_JSON():
+#     authors = session.query(Author).all()
+#     return jsonify(Authors=[a.serialize for a in authors])
 
 
 if __name__ == '__main__':
