@@ -178,6 +178,31 @@
     </div>
   </div>
 </div>
+
+<div id="editAuthor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editAuthorLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="form-horizontal" action="{{url_for('add_author')}}" method="post">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit Author</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Author</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="name" name="name" placeholder="ex. John Smith">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
     
     <header class="jumbotron">
         <div class="container">
@@ -208,9 +233,25 @@
                 <h1>Authors</h1>
                 <hr>
                 <ul>
-                  {% for a in authors %}
-                  <li><a id="{{a.id}}" class="author-link" href="#poem-list">{{a.name}}</a></li>
-                  {% endfor %}
+                    <div id="accordion">
+                    {% for a in authors %}
+                    <li>
+                      <a id="{{a.id}}" class="author-link" href="#poem-list">{{a.name}}</a>
+                      <div>
+                        <span id="{{a.id}}" class="fa-links">
+                            <a href="#update-author-form" class="icon-link update-author-link popup-with-form open-popup-link" data-toggle="modal" data-target="#editAuthor">
+                            <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                            <!--this empty tag prevents the a element from being an accordion-->
+                            <span></span>
+                            <a href="#delete-author-form" class="icon-link update-author-link popup-with-form open-popup-link">
+                            <i class="fa fa-times"></i>
+                            </a>
+                        </span>
+                    </div> 
+                    </li>                                                              
+                    {% endfor %}
+                    </div>
                 </ul>
             </section>
         </div>
@@ -247,6 +288,7 @@
 </div><!-- /#wrapper -->
 
 <script src="{{ url_for('static', filename='js/jquery-1.9.1.min.js') }}"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script src="//apis.google.com/js/platform.js?onload=start"> </script>
 <script src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
@@ -337,6 +379,16 @@
     });
         });
     }
+</script>
+<script>
+    $(document).on('ready', function(){
+        $("#accordion").accordion({
+            header: 'a',
+            active: false,
+            collapsible: true,
+            autoHeight: false
+        });
+    });
 </script>
 
 </body>
