@@ -64,10 +64,10 @@ $(document).ready(function() {
   /*FORM DOES ACTUAL LOGIC*/
   var update_author_place = function() {
       clear_author_forms();
-      /*now update everything*/
+      /*now update everything*/      
       author_id = $(this).parent().attr('id');
       $('#update-author-form #id').attr('value', author_id);
-      $('#delete-author-form #id').attr('value', author_id);
+      $('#delete-author-form #id').attr('value', author_id);      
   };
 
 

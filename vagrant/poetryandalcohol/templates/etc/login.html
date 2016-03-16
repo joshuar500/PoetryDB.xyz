@@ -1,78 +1,31 @@
-<html>
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-  <script src="https://apis.google.com/js/api:client.js"></script>
-  <script>
-  var googleUser = {};
-  var startApp = function() {
-    gapi.load('auth2', function(){
-      // Retrieve the singleton for the GoogleAuth library and set up the client.
-      auth2 = gapi.auth2.init({
-        client_id: '1006406991652-n8j3ou5e4sje06mena7iq3ol33eep8te.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        // Request scopes in addition to 'profile' and 'email'
-        //scope: 'additional_scope'
-      });
-      attachSignin(document.getElementById('customBtn'));
-    });
-  };
-
-  function attachSignin(element) {
-    console.log(element.id);
-    auth2.attachClickHandler(element, {},
-        function(googleUser) {
-          document.getElementById('name').innerText = "Signed in: " +
-              googleUser.getBasicProfile().getName();
-        }, function(error) {
-          alert(JSON.stringify(error, undefined, 2));
-        });
-  }
-  </script>
-  <style type="text/css">
-    #customBtn {
-      display: inline-block;
-      background: #4285f4;
-      color: white;
-      width: 190px;
-      border-radius: 5px;
-      white-space: nowrap;
-    }
-    #customBtn:hover {
-      cursor: pointer;
-    }
-    span.label {
-      font-weight: bold;
-      color: #333;
-    }
-    span.icon {
-      display: inline-block;
-      vertical-align: middle;
-      width: 42px;
-      height: 42px;
-      border-right: #2265d4 1px solid;
-    }
-    span.buttonText {
-      display: inline-block;
-      vertical-align: middle;
-      padding-left: 42px;
-      padding-right: 42px;
-      font-size: 14px;
-      font-weight: bold;
-      /* Use the Roboto font that is loaded in the <head> */
-      font-family: 'Roboto', sans-serif;
-    }
-  </style>
-  </head>
-  <body>
-  <!-- In the callback, you would hide the gSignInWrapper element on a
-  successful sign in -->
-  <div id="gSignInWrapper">
-    <span class="label">Sign in with:</span>
-    <div id="customBtn" class="customGPlusSignIn">      
-      <span class="buttonText">Google</span>
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Login </h4>
+            </div>
+            <div class="modal-body text-center center-block">
+              <div id="signInButton">
+                <span class="g-signin"
+                  data-scope="openid email"
+                  data-clientid="1006406991652-n8j3ou5e4sje06mena7iq3ol33eep8te.apps.googleusercontent.com"
+                  data-redirecturi="postmessage"
+                  data-accesstype="offline"
+                  data-cookiepolicy="single_host_origin"
+                  data-callback="signInCallback"
+                  data-approvalprompt="force">Google+ Sign In
+                </span>
+              </div>
+              
+                <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer()">
+                <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
+                </fb:login-button>
+              
+            <div id="result"></div>
+              <button type="button" class="btn btn-default form-control" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <div id="name"></div>
-  <script>startApp();</script>
-</body>
-</html>
+</div>

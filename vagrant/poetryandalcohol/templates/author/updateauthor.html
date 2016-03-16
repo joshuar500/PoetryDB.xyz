@@ -1,20 +1,28 @@
 <!-- Update Author Modal -->
   <!-- form to update author -->
-  <form id="update-author-form" class="mfp-hide white-popup-block white-popup" action="{{url_for('update_author')}}" method="post">
-    <h1>Update Author</h1>
-    <fieldset style="border:0;">
-      <p>Please re-enter the author's name:</p>
-      <ol>
-        <li>
-          <label for="name">Author Name: </label>
-          <input id="name" name="name" required="" type="text">
-          <input id="id" name="id" type="hidden">
-        </li>
-        <li>
-          <input type="submit" value="Update">
-        </li>
-      </ol>
-    </fieldset>
-  </form>
-  </p>
+<div id="updateAuthor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateAuthorLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="update-author-form" class="form-horizontal" action="{{url_for('update_author')}}" method="post">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit Author</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">                                         
+            <div class="col-sm-10">
+                <label for="name">Author Name:</label>
+                    <input id="name" type="text" class="form-control" id="name" name="name" placeholder="ex. John Smith">                
+            </div>            
+            <input id="id" name="id" type="hidden">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 <!-- / end update author modal -->

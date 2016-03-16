@@ -353,6 +353,9 @@ def update_author():
     if request.method == 'POST':
         new_name = request.form['name']
         author_id = request.form['id']
+        
+        print new_name
+        print author_id
 
         editedAuthor = session.query(Author).filter_by(id=author_id).one()
         editedAuthor.name = new_name
@@ -369,17 +372,20 @@ def update_author():
 # deletes an author and all poems from the database
 @app.route('/authors/delete/', methods=['GET', 'POST'])
 def delete_author():
-    if request.method == 'POST':
+    if request.method == 'POST':        
         author_id = request.form['id']
         author_to_delete = session.query(Author).filter_by(id=author_id).one()
         session.delete(author_to_delete)
-        session.commit()
-        # delete all poems associated with author
-        author_poems = session.query(Poem).filter_by(author_id=author_id).all()
-        session.delete(author_poems)
-        session.commit()
-        flash("an author has been deleted")
-        return redirect(url_for('back'))
+        session.commit()        
+        # delete all poems associated with author if they exist
+        try:
+            author_poems = session.query(Poem).filter_by(author_id=author_id).all()
+            session.delete(author_poems)
+            session.commit()
+            return redirect(url_for('back'))
+        except:           
+            flash("an author has been deleted")
+            return redirect(url_for('back'))
     else:
         # this should return an error on the form
         return render_template('index.html')
