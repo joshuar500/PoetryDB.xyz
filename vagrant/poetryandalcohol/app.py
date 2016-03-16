@@ -312,10 +312,10 @@ def authors():
     if 'email' not in login_session:        
         print "EMAISDLKASHF"
         return render_template('index.html', authors=authors, STATE=state)
-    elif 'email' in login_session:        
+    elif 'email' in login_session:
         user_id = getUserId(login_session['email'])        
-        creator = login_session['email']        
-        return render_template('index.html', authors=authors, STATE=state, creator=creator)
+        creator = login_session['email']
+        return render_template('index.html', authors=authors, STATE=state, creator=creator, user_id=user_id)
     else:
         return redirect('/login')
 
@@ -327,7 +327,7 @@ def add_author():
         #if author exists, do not create new author
         all_authors = session.query(Author).all()
         new_author = request.form['name']
-        #fix this for multiple rows check
+        #fix this for multiple rows check        
         exists = session.query(Author.name).filter_by(name=new_author).scalar() is not None
         print new_author
         print new_author
@@ -337,7 +337,7 @@ def add_author():
             print "Author exists widdit"
             return redirect(url_for('back'))
         else:
-            new_author = Author(name=new_author)            
+            new_author = Author(name=new_author, user_id=getUserId(login_session['email']))            
             session.add(new_author)
             session.commit()
             print "Author CREATED"            
@@ -407,16 +407,29 @@ def get_poem():
 @app.route('/poem/new/', methods=['GET', 'POST'])
 def add_poem():
     if request.method == 'POST':
-        new_poem_name = request.form['name']
-        new_poem_text = request.form['the_poem']
-        author_id = request.form['author_id']
-        new_poem = Poem(name=new_poem_name,
-                        the_poem=new_poem_text,
-                        author_id=author_id)
-        session.add(new_poem)
-        session.commit()
-        flash("new poem added")
-        return redirect(url_for('back'))
+        print "HELLOAJSDLKASHDHASJHD HK KJHLSADJKH LASDKHJ DSAKHJL"
+        new_poem_name = request.form['poemTitle']
+        new_poem_text = request.form['poemText']
+        author_name = request.form['name']        
+        print new_poem_name
+        print new_poem_text
+        print author_name
+        try:        
+            if session.query(Author).filter_by(name=author_name).one() is not None:
+                print "What am i doing in here"
+                author = session.query(Author).filter_by(name=author_name).one()
+                author_id = author.id
+                new_poem = Poem(name=new_poem_name,
+                                the_poem=new_poem_text,
+                                author_id=author_id)
+                session.add(new_poem)
+                session.commit()
+                print "YES! Added poem because the author existed!"
+                return redirect(url_for('back'))
+        except:
+            print "Nope! Nothing here! Author does not exist"
+            flash("new poem added")
+            return redirect(url_for('back'))
     else:
         # this should return an error on the form
         return render_template('index.html')
