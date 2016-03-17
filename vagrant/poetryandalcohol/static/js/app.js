@@ -2,6 +2,7 @@ $(document).ready(function() {
     
   var current_userid;
   /*GET CURRENT LOGGED IN USER*/
+  /* Dont forget to check server side too! */
   var get_current_user = function(e) {
     
     num = 0;
