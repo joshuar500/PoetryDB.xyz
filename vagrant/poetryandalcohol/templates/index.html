@@ -62,7 +62,7 @@
             {% endif %}
          </ul>
          {% if 'username' not in session %}
-         <ul class="nav navbar-nav navbar-right">
+         <ul class="nav navbar-nav navbar-right">             
              <li>
                <a id="login" data-toggle="modal" data-target="#loginModal">
                  <span class="glyphicon glyphicon-log-in"></span> Login
@@ -72,12 +72,19 @@
          </ul>
          {% else %}
          <ul class="nav navbar-nav navbar-right">
-             <li>
-               <a href="{{url_for('disconnect')}}">
-                 <span class="glyphicon glyphicon-log-out"></span> Logout
-               </a>
-               <span id="#logoutResult"></span>
-             </li>
+            <li class="dropdown" style="margin-right:10px">
+                <a class="dropdown-toggle" aria-expanded="false" role="button" data-toggle="dropdown" href="#">{{creator}}</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('disconnect')}}">
+                        <span class="glyphicon glyphicon-log-out"></span> Logout
+                        </a>               
+                    </li>
+                </ul>              
+            </li>                                       
          </ul>
          {% endif %}
       </div>
@@ -90,6 +97,8 @@
 {% include "author/updateauthor.html" %}
 {% include "author/deleteauthor.html" %}
 {% include "poem/addpoem.html" %}
+{% include "poem/updatepoem.html" %}
+{% include "poem/deletepoem.html" %}
 
     
     <header class="jumbotron">
@@ -156,7 +165,7 @@
         <div id="poem-single" class="sidebar">
             <aside>
                 <div id="poem">
-
+                                        
                 </div>
             </aside>
         </div>

@@ -313,12 +313,18 @@ def authors():
         print "EMAISDLKASHF"
         return render_template('index.html', authors=authors, STATE=state)
     elif 'email' in login_session:
-        user_id = getUserId(login_session['email'])        
+        user_id = getUserId(login_session['email'])
         creator = login_session['email']
         return render_template('index.html', authors=authors, STATE=state, creator=creator, user_id=user_id)
     else:
         return redirect('/login')
-
+        
+# returns logged in users id        
+@app.route('/get_current_user')
+def get_current_user():    
+    user_id = getUserId(login_session['email'])
+    return jsonify(user_id=user_id)
+    
 
 # adds an author to the database
 @app.route('/authors/new/', methods=['GET', 'POST'])
@@ -403,7 +409,7 @@ def get_author_poems():
 
 # returns a single poem in json for jquery update
 @app.route('/get_poem')
-def get_poem():
+def get_poem():    
     poem_id = request.args.get('poem_id', 0, type=int)
     poem = session.query(Poem).filter_by(id=poem_id).one()
     return jsonify(Poem=poem.serialize)
@@ -412,29 +418,24 @@ def get_poem():
 # adds an author to the database
 @app.route('/poem/new/', methods=['GET', 'POST'])
 def add_poem():
-    if request.method == 'POST':
-        print "HELLOAJSDLKASHDHASJHD HK KJHLSADJKH LASDKHJ DSAKHJL"
+    if request.method == 'POST':        
         new_poem_name = request.form['poemTitle']
         new_poem_text = request.form['poemText']
-        author_name = request.form['name']        
-        print new_poem_name
-        print new_poem_text
-        print author_name
+        author_name = request.form['name']
+        user_id = getUserId(login_session['email'])
         try:        
-            if session.query(Author).filter_by(name=author_name).one() is not None:
-                print "What am i doing in here"
+            if session.query(Author).filter_by(name=author_name).one() is not None:                
                 author = session.query(Author).filter_by(name=author_name).one()
                 author_id = author.id
                 new_poem = Poem(name=new_poem_name,
                                 the_poem=new_poem_text,
-                                author_id=author_id)
+                                author_id=author_id,
+                                user_id=user_id)
                 session.add(new_poem)
                 session.commit()
-                print "YES! Added poem because the author existed!"
                 return redirect(url_for('back'))
-        except:
-            print "Nope! Nothing here! Author does not exist"
-            flash("new poem added")
+        except:            
+            print "FIX IF THERE IS NO AUTHOR, WHAT DO TO IN THIS EXCEPT CASE????"
             return redirect(url_for('back'))
     else:
         # this should return an error on the form

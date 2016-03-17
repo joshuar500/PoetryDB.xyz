@@ -15,6 +15,14 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
+    
+    @property
+    def serialize(self):
+        # Returns an object data in easily serializeable format
+        return {
+            'name': self.name,
+            'id': self.id,
+        }
 
 
 class Author(Base):
@@ -78,6 +86,7 @@ class Poem(Base):
             'tags': self.tags,
             'alcohol_id': self.alcohol_id,
             'author_id': self.author_id,
+            'user_id': self.user_id,            
         }
 
 

@@ -1,4 +1,19 @@
 $(document).ready(function() {
+    
+  var current_userid;
+  /*GET CURRENT LOGGED IN USER*/
+  var get_current_user = function(e) {
+    
+    num = 0;
+                    
+    $.getJSON($SCRIPT_ROOT + '/get_current_user', {
+        test : 'test'
+    }, function(data){                 
+        current_userid = data.user_id;
+        return true;
+    });
+    return false;
+  };
 
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
   var get_poems = function(e) {
@@ -26,7 +41,8 @@ $(document).ready(function() {
             }
             $('#poem-list').append('<a class="poem-link" id="'+ value.id +'" href="#">' + value.name + '</a><br />');
         });
-      });
+      });      
+    $('#poem-list').append('<hr /><a href="#add-poem" data-toggle="modal" data-target="#addPoem"><button type="button" class="btn btn-default btn-xs">Add Poem</button></a><br />');    
     initMagPopup();
     initClickBinds.update_poem_clicks();
     } else {
@@ -37,20 +53,29 @@ $(document).ready(function() {
 
   /*GET A SINGLE POEM THEN UPDATE THE PAGE*/
   var get_one_poem = function(e) {
+    get_current_user();
     $.getJSON($SCRIPT_ROOT + '/get_poem', {
-      poem_id: $(this).attr('id')
-    }, display_poem);    
+      poem_id: $(this).attr('id')      
+    }, display_poem);
     return false;
   };
 
 
   var display_poem = function(data) {
-    clear_poem();
+    clear_poem();           
     if(data !== null) {
-        /* init slimscroll for poem */        
-        $.each(data, function(key, value) {
-            $('#poem').append('<h2>' + value.name + '</h2><span class="fix-lines">' + value.the_poem + '</span><br />');
-        });
+        /* init slimscroll for poem */
+        $.each(data, function(key, value) {            
+            $('#poem').append('<h2>' + value.name + '</h2><span class="fix-lines">' + value.the_poem + '</span><br />');                                    
+            /* check is current user is owner of this poem */
+            if (current_userid == 3){
+                console.log("PLEASE FUCKING WORK");
+            };
+            if(get_current_user() == value.user_id){                
+                $('#poem').append('<hr /<a href="#update-poem" data-toggle="modal" data-target="#updatePoem"><button type="button" class="btn btn-default btn-xs">Update Poem</button></a>'+
+                     '&nbsp;<a href="#delete-poem" data-toggle="modal" data-target="#deletePoem"><button type="button" class="btn btn-default btn-xs">Delete Poem</button></a><br />');
+            };
+        });        
         initMagPopup();
         remove_classie_stuff();
         initClickBinds.update_poem_clicks();        
@@ -126,33 +151,7 @@ $(document).ready(function() {
     });
 
 
-    $('a.update-author-link').bind('click', update_author_place);
-
-
-    // /* push menu right when element class is clicked */
-    // $('.toggle-push-right').bind( "click", function(){
-    //   classie.add( body, "pmr-open" );
-    //   document.body.appendChild(mask);
-    //   activeNav = "pmr-open";
-    // } );
-
-
-    // /* hide active menu if close menu button is clicked */
-    // $('.close-menu').bind( "click", function(){
-    //     classie.remove( body, "pmr-open" );
-    //     activeNav = "";
-    //     $( "div" ).remove( ".mask" );
-    //     $( "div" ).remove( ".mask-again" );
-    // });
-
-
-    // /* hide active menu if close menu button is clicked */
-    // $('.close-menu-again').bind( "click", function(){
-    //     classie.remove( body, "pmr-open-again" );
-    //     activeNav = "";
-    //     $( "div" ).remove( ".mask" );
-    //     $( "div" ).remove( ".mask-again" );
-    // });        
+    $('a.update-author-link').bind('click', update_author_place);     
     
   };
 
