@@ -1,20 +1,19 @@
 $(document).ready(function() {
     
-  var current_userid;
+  var current_userid = 0;
   /*GET CURRENT LOGGED IN USER*/
   /* Dont forget to check server side too! */
-  var get_current_user = function(e) {
-    
-    num = 0;
+  var get_current_user = function(e) {        
                     
     $.getJSON($SCRIPT_ROOT + '/get_current_user', {
         test : 'test'
-    }, function(data){                 
+    }, function(data){
         current_userid = data.user_id;
+        console.log("current_userid: " + current_userid);
         return true;
     });
     return false;
-  };
+  };        
 
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
   var get_poems = function(e) {
@@ -30,7 +29,7 @@ $(document).ready(function() {
 
   var update_poem_list = function(data) {
     clear_poem();
-    clear_poem_list();
+    clear_poem_list();        
     var i = 0;
     if(data !== null) {
       $.each(data, function() {
@@ -42,8 +41,10 @@ $(document).ready(function() {
             }
             $('#poem-list').append('<a class="poem-link" id="'+ value.id +'" href="#">' + value.name + '</a><br />');
         });
-      });      
-    $('#poem-list').append('<hr /><a href="#add-poem" data-toggle="modal" data-target="#addPoem"><button type="button" class="btn btn-default btn-xs">Add Poem</button></a><br />');    
+      });
+    if(current_userid !== 0){         
+        $('#poem-list').append('<hr /><a href="#add-poem" data-toggle="modal" data-target="#addPoem"><button type="button" class="btn btn-default btn-xs">Add Poem</button></a><br />');
+    }
     initMagPopup();
     initClickBinds.update_poem_clicks();
     } else {
@@ -53,8 +54,7 @@ $(document).ready(function() {
 
 
   /*GET A SINGLE POEM THEN UPDATE THE PAGE*/
-  var get_one_poem = function(e) {
-    get_current_user();
+  var get_one_poem = function(e) {    
     $.getJSON($SCRIPT_ROOT + '/get_poem', {
       poem_id: $(this).attr('id')      
     }, display_poem);
@@ -69,10 +69,8 @@ $(document).ready(function() {
         $.each(data, function(key, value) {            
             $('#poem').append('<h2>' + value.name + '</h2><span class="fix-lines">' + value.the_poem + '</span><br />');                                    
             /* check is current user is owner of this poem */
-            if (current_userid == 3){
-                console.log("PLEASE FUCKING WORK");
-            };
-            if(get_current_user() == value.user_id){                
+            if(current_userid === value.user_id){
+                console.log("YES"); 
                 $('#poem').append('<hr /<a href="#update-poem" data-toggle="modal" data-target="#updatePoem"><button type="button" class="btn btn-default btn-xs">Update Poem</button></a>'+
                      '&nbsp;<a href="#delete-poem" data-toggle="modal" data-target="#deletePoem"><button type="button" class="btn btn-default btn-xs">Delete Poem</button></a><br />');
             };
@@ -275,6 +273,7 @@ $(document).ready(function() {
   /*INITIALIZE EVERYTHING*/
   initMagPopup();
   initClickBinds();
+  get_current_user();
 
   /* TODO: animation for menu changes */
 

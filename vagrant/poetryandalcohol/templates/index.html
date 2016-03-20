@@ -110,7 +110,7 @@
             <form>
                 <div class="col-md-6 col-md-offset-3 form-group">
                     <div class="input-group input-group-lg">
-                    <input class="form-control" placeholder="Type in author, poem, or tag" type="text">
+                    <input id="search-input" class="form-control" name="search-input" placeholder="Type in author, poem, or tag" type="text">
                     <span class="input-group-addon">Search</span>
                 </div>
                 </div>
@@ -287,6 +287,19 @@
             collapsible: true,
             autoHeight: false
         });
+        $("#search-input").autocomplete({
+        source:function(request, response) {
+            $.getJSON("{{url_for('get_search_term')}}",{
+                q: request.term, // in flask, "q" will be the argument to look for using request.args
+            }, function(data) {                
+                response(data.search_term); // matching_results from jsonify
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            console.log(ui.item.value); // not in your question, but might help later
+        }
+    });       
     });
 </script>
 

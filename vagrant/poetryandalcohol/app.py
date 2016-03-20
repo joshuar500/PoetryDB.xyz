@@ -321,9 +321,21 @@ def authors():
         
 # returns logged in users id        
 @app.route('/get_current_user')
-def get_current_user():    
-    user_id = getUserId(login_session['email'])
-    return jsonify(user_id=user_id)
+def get_current_user():
+    try:
+        user_id = getUserId(login_session['email'])
+        return jsonify(user_id=user_id)
+    except:
+        return render_template('index.html', user_id=0)
+        
+# get and return search terms
+@app.route('/get_search_term', methods=['GET'])
+def get_search_term():
+    print "in get search try block"
+    term = request.args.get('q')
+    print "this is the term" + term
+    search_term = session.query(Author).filter(Author.name==term).all()
+    return jsonify(search_term=search_term)
     
 
 # adds an author to the database
