@@ -330,13 +330,15 @@ def get_current_user():
         
 # get and return search terms
 @app.route('/get_search_term', methods=['GET'])
-def get_search_term():
-    print "in get search try block"
+def get_search_term():    
     term = request.args.get('q')
-    print "this is the term" + term
-    do_query = session.query(Author.name).filter(Author.name.like('%' + str(term) + '%'))
-    results = [author[0] for author in do_query.all()]
-    return jsonify(search_term=results)
+    do_query_authors = session.query(Author.name).filter(Author.name.like('%' + str(term) + '%'))
+    do_query_poems = session.query(Poem.name).filter(Poem.name.like('%' + str(term) + '%'))
+    author_results = [author[0] for author in do_query_authors.all()]
+    poem_results = [poem[0] for poem in do_query_poems.all()]        
+    #print author_results
+    #print poem_results
+    return jsonify(search_term=author_results)
     
 
 # adds an author to the database
