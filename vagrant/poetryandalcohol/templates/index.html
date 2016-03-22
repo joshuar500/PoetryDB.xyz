@@ -108,11 +108,13 @@
             <div class="jumbotron text-center">
             <h2>Welcome to Poetry.xyz</h2>
             <form>
-                <div class="col-md-6 col-md-offset-3 form-group">
-                    <div class="input-group input-group-lg">
-                    <input id="search-input" class="form-control" name="search-input" placeholder="Type in author, poem, or tag" type="text">
-                    <span class="input-group-addon">Search</span>
-                </div>
+                <div class="col-md-6 col-md-offset-3 form-group">                    
+                    <div class="input-group input-group-lg">                                                
+                        <input id="search-input" class="form-control input-lg" name="search-input" placeholder="Type in author, poem, or tag" type="text" />                        
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Search</button>
+                        </span>                        
+                    </div>                                        
                 </div>
             </form>
             <br>
@@ -291,9 +293,13 @@
         source:function(request, response) {
             $.getJSON("{{url_for('get_search_term')}}",{
                 q: request.term, // in flask, "q" will be the argument to look for using request.args
-            }, function(data) {                
+            }, function(data) {
                 response(data.search_term); // matching_results from jsonify
             });
+        },
+        messages: {
+            noResults: '',
+            results: function() {}       
         },
         minLength: 2,
         select: function(event, ui) {

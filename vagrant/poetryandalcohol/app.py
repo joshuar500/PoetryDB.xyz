@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request,\
     redirect, url_for, flash, jsonify, make_response
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, or_
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Author, Poem, User
 
@@ -334,8 +334,9 @@ def get_search_term():
     print "in get search try block"
     term = request.args.get('q')
     print "this is the term" + term
-    search_term = session.query(Author).filter(Author.name==term).all()
-    return jsonify(search_term=search_term)
+    do_query = session.query(Author.name).filter(Author.name.like('%' + str(term) + '%'))
+    results = [author[0] for author in do_query.all()]
+    return jsonify(search_term=results)
     
 
 # adds an author to the database
