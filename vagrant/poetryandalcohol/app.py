@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
 
-engine = create_engine('sqlite:///poetryandalcohol.db')
+engine = create_engine('sqlite:///poetryandalcohol.db/', encoding='utf-8')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -332,13 +332,24 @@ def get_current_user():
 @app.route('/get_search_term', methods=['GET'])
 def get_search_term():    
     term = request.args.get('q')
+
+    # query the authors with the search term
     do_query_authors = session.query(Author.name).filter(Author.name.like('%' + str(term) + '%'))
-    do_query_poems = session.query(Poem.name).filter(Poem.name.like('%' + str(term) + '%'))
     author_results = [author[0] for author in do_query_authors.all()]
-    poem_results = [poem[0] for poem in do_query_poems.all()]        
-    #print author_results
-    #print poem_results
-    return jsonify(search_term=author_results)
+    
+    # query the poems with the search term
+    do_query_poems = session.query(Poem.name).filter(Poem.name.like('%' + str(term) + '%'))
+    poem_results = [poem[0] for poem in do_query_poems.all()]
+    
+    # create a list combining authors and poems
+    list_results = []
+    if poem_results!=None or poem_results!='':
+        list_results.extend(poem_results)
+    if author_results!=None or author_results!='':
+        list_results.extend(author_results)
+       
+    # return list of authors and poems if found in database
+    return jsonify(search_term=list_results)
     
 
 # adds an author to the database
