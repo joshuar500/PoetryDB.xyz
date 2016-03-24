@@ -2,7 +2,7 @@
 <div id="updatePoem" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updatePoemLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form id="update-author-form" class="form-horizontal" action="{{url_for('update_poem')}}" method="post">
+      <form id="update-poem-form" class="form-horizontal" action="{{url_for('update_poem')}}" method="post">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Update Poem</h4>
@@ -10,13 +10,16 @@
       <div class="modal-body">
           <div class="form-group">                                         
             <div class="col-sm-10">
-                <li>          
+                <li>
+                    <label for="author_name">Author Name: </label>
+                    <input id="author_name" name="author-name" required="" type="text"><br />
                     <label for="name">Poem Name: </label>
                     <input id="name" name="name" required="" type="text"><br />
                     <label for="the_poem">The Poem: </label>
                     <textarea id="the_poem" name="the_poem">
                     </textarea>
                     <input id="id" name="id" type="hidden">
+                    <input id="author_id" name="author_id" type="hidden">
                 </li>                
             </div>                        
           </div>

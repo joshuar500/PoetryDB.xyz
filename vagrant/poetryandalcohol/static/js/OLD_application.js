@@ -87,6 +87,7 @@ $(document).ready(function() {
       poem_id = $('#poem').find('i').text();
       console.log(poem_id);
       console.log(author_id);
+      console.log("ANYTHING?");
       $('#add-poem-form #author_id').attr('value', author_id);
       $('#update-poem-form #id').attr('value', poem_id);
       $('#delete-poem-form #id').attr('value', poem_id);

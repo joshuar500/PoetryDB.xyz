@@ -350,6 +350,19 @@ def get_search_term():
        
     # return list of authors and poems if found in database
     return jsonify(search_term=list_results)
+
+
+# # get and return author name from search
+# @app.route('/get_search_term_name', methods=['GET'])
+# def get_search_term_name():    
+#     term = request.args.get('q')
+
+#     # query the authors with the search term
+#     do_query_authors = session.query(Author.name).filter(Author.name.like('%' + str(term) + '%'))
+#     author_results = [author[0] for author in do_query_authors.all()]
+       
+#     # return list of authors and poems if found in database
+#     return jsonify(auther_results=author_results)
     
 
 # adds an author to the database
@@ -460,8 +473,8 @@ def add_poem():
                 session.add(new_poem)
                 session.commit()
                 return redirect(url_for('back'))
-        except:            
-            print "FIX IF THERE IS NO AUTHOR, WHAT DO TO IN THIS EXCEPT CASE????"
+        except:
+            flash("Author not found")
             return redirect(url_for('back'))
     else:
         # this should return an error on the form

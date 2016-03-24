@@ -1,5 +1,9 @@
 $(document).ready(function() {
     
+   $('#my-modal').bind('hide', function () {
+        clear_poem_forms();
+    });
+    
   var current_userid = 0;
   /*GET CURRENT LOGGED IN USER*/
   /* Dont forget to check server side too! */
@@ -17,8 +21,12 @@ $(document).ready(function() {
 
   /*GET LIST OF POEMS BY AUTHOR THEN UPDATE THE PAGE*/
   var get_poems = function(e) {
+      
+    author_name = $.trim($(this).parent().text());    
+    console.log(author_name);
+      
     var id = $(this).attr('id');    
-    update_poem_place(id);
+    update_poem_place(id, author_name);    
 
     $.getJSON($SCRIPT_ROOT + '/get_author_poems', {
       author_id: $(this).attr('id')
@@ -71,8 +79,9 @@ $(document).ready(function() {
             /* check is current user is owner of this poem */
             if(current_userid === value.user_id){
                 console.log("YES"); 
-                $('#poem').append('<hr /<a href="#update-poem" data-toggle="modal" data-target="#updatePoem"><button type="button" class="btn btn-default btn-xs">Update Poem</button></a>'+
-                     '&nbsp;<a href="#delete-poem" data-toggle="modal" data-target="#deletePoem"><button type="button" class="btn btn-default btn-xs">Delete Poem</button></a><br />');
+                $('#poem').append('<hr /><a href="#update-poem" data-toggle="modal" data-target="#updatePoem"><button type="button" class="btn btn-default btn-xs">Update Poem</button></a>'+
+                        '<i class="fa fa-pencil-square-o" style="display:none">' + value.id + '</i>' +                        
+                     '&nbsp;<a href="#delete-poem" class="update-poem-link" data-toggle="modal" data-target="#deletePoem"><button type="button" class="btn btn-default btn-xs">Delete Poem</button></a><br />');
             };
         });        
         initMagPopup();
@@ -89,7 +98,7 @@ $(document).ready(function() {
   var update_author_place = function() {
       clear_author_forms();
       /*now update everything*/      
-      author_id = $(this).parent().attr('id');
+      author_id = $(this).parent().attr('id');      
       $('#update-author-form #id').attr('value', author_id);
       $('#delete-author-form #id').attr('value', author_id);      
   };
@@ -97,14 +106,17 @@ $(document).ready(function() {
 
   /*UPDATE THE POEM'S NAME/ID FOR FORM*/
   /*FORM DOES ACTUAL LOGIC*/
-  var update_poem_place = function(author_id) {
+  var update_poem_place = function(author_id, author_name) {
       clear_poem_forms();
       /*now update everything*/
       poem_id = $('#poem').find('i').text();
+      console.log(author_name);      
       console.log(poem_id);
       console.log(author_id);
       $('#add-poem-form #author_id').attr('value', author_id);
-      $('#update-poem-form #id').attr('value', poem_id);
+      $('#add-poem-form #author_name').attr('value', author_name);
+      $('#author_name').prop('disabled', false);
+      $('#update-poem-form #id').attr('value', poem_id);      
       $('#delete-poem-form #id').attr('value', poem_id);
   };
 
@@ -129,8 +141,9 @@ $(document).ready(function() {
 
   var clear_poem_forms = function() {
     $('#add-poem-form #id').attr('value', '');
+    $('#add-poem-form #author_name').attr('value', '');
 
-    $('#update-poem-form #name').attr('value', '');
+    $('#update-poem-form #name').attr('value', '');        
     $('#update-poem-form #id').attr('value', '');
 
     $('#delete-poem-form #name').attr('value', '');
@@ -156,6 +169,9 @@ $(document).ready(function() {
 
 
   initClickBinds.update_poem_clicks = function() {
+    
+    
+    
     $('#poem').slimScroll({
         height: 'auto',
         width: '350px',
@@ -171,7 +187,8 @@ $(document).ready(function() {
       if (e.keyCode == 13) {
         get_one_poem(e);
       }
-    });        
+    });
+            
   };
 
   var initMagPopup = function() {
