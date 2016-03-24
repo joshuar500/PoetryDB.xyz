@@ -119,8 +119,8 @@ a img {
     box-sizing: border-box;
 }
 body {
-    background: url('../img/bg.jpg');
-    background-color: #eee;
+    /*background: url('../img/bg.jpg');*/
+    background-color: #fff;
     color: #505050;
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
