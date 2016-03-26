@@ -488,6 +488,11 @@ def update_poem():
         new_name = request.form['name']
         new_poem = request.form['the_poem']
         poem_id = request.form['id']
+        
+        print poem_id
+        print poem_id
+        print poem_id
+        print poem_id
 
         editedPoem = session.query(Poem).filter_by(id=poem_id).one()
         editedPoem.name = new_name
@@ -533,10 +538,10 @@ def authors_poems_JSON(author_id):
     poems = session.query(Poem).filter_by(author_id=author_id)
     return jsonify(Poem=[p.serialize for p in poems])
         
-# @app.route('/authors/<int:author_id>/poems/<int:poem_id>/JSON')
-# def poem_JSON():
-#     authors = session.query(Author).all()
-#     return jsonify(Authors=[a.serialize for a in authors])
+@app.route('/authors/<int:author_id>/poems/<int:poem_id>/JSON')
+def poem_JSON(author_id, poem_id):
+    poem = session.query(Poem).filter_by(author_id=author_id, id=poem_id)
+    return jsonify(Poems=[p.serialize for p in poem])
 
 
 if __name__ == '__main__':

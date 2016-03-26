@@ -71,10 +71,16 @@ $(document).ready(function() {
 
 
   var display_poem = function(data) {
+    //clear_poem_forms();
     clear_poem();           
     if(data !== null) {
         /* init slimscroll for poem */
-        $.each(data, function(key, value) {            
+        $.each(data, function(key, value) {
+            
+            $('#update-poem-form #name').attr('value', value.name);
+            $('#update-poem-form #the_poem').val(value.the_poem);
+            $('#update-poem-form #id').val(value.id);
+            
             $('#poem').append('<h2>' + value.name + '</h2><span class="fix-lines">' + value.the_poem + '</span><br />');                                    
             /* check is current user is owner of this poem */
             if(current_userid === value.user_id){
@@ -110,13 +116,14 @@ $(document).ready(function() {
       clear_poem_forms();
       /*now update everything*/
       poem_id = $('#poem').find('i').text();
-      console.log(author_name);      
-      console.log(poem_id);
-      console.log(author_id);
-      $('#add-poem-form #author_id').attr('value', author_id);
-      $('#add-poem-form #author_name').attr('value', author_name);
+      console.log("author: " + author_name);      
+      console.log("poem_id: " + poem_id);
+      console.log("author_id: " + author_id);
+      $('#add-poem-form #author_id').attr('value', author_id);      
+      $('#add-poem-form #author_name').attr('value', author_name);      
       $('#author_name').prop('disabled', false);
-      $('#update-poem-form #id').attr('value', poem_id);      
+      $('#update-poem-form #id').attr('value', poem_id);
+      $('#update-poem-form #author_name').attr('value', author_name);
       $('#delete-poem-form #id').attr('value', poem_id);
   };
 
@@ -124,6 +131,8 @@ $(document).ready(function() {
   /*CLEAR POEM LIST*/
   var clear_poem_list = function() {
     $('#poem-list').empty();
+    $('#update-poem-form #name').attr('value', '');
+    $('#update-poem-form #the_poem').empty();
   };
 
   var clear_poem = function() {

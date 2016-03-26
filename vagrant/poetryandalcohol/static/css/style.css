@@ -20,14 +20,15 @@
     padding-top: 0;
     padding-bottom: 0;
     margin-right: 0;
-    margin-left: 0;
-    border: 0;
+    margin-left: 0;    
+    border: 0;    
     -webkit-box-shadow: none;
     box-shadow: none
 }
 .navbar-default {
   background-color: #ffffff;
-  border-color: #ffffff;
+  border-top: 5px #FF7878 solid;
+  border-bottom: #fff;
 }
 .navbar-default .navbar-brand {
   color: #7a7a7a;
@@ -144,14 +145,14 @@ p:last-child {
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
 section {
-  border-top: 10px solid;
-  border-color: #555;
+  border-top: 5px solid;
+  border-color: #FF7878;
   height: 500px;
   max-height: 500px;
 }
 aside {
-  border-top: 10px solid;
-  border-color: #555;
+  border-top: 5px solid;
+  border-color: #FF7878;
   height: 500px;
   max-height: 500px;  
 }

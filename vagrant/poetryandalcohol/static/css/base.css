@@ -118,7 +118,7 @@ a img {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-body {
+body {    
     /*background: url('../img/bg.jpg');*/
     background-color: #fff;
     color: #505050;
@@ -156,12 +156,9 @@ a:hover {
 |* Template
 |* ------------------------------------------------------------ *|
 \* ------------------------------------------------------------ */
-.wrapper {
+.wrapper {    
     width: 100%;
     margin: 0 auto;
-}
-.main {
-    
 }
 .container {
     width: 100%;
