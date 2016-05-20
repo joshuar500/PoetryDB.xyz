@@ -9,7 +9,7 @@ Make sure you have Vagrant installed. cd into vagrant folder and `vagrant up`. T
 ### Technology
 Vagrant, Flask
 
-###
+### TODO:
 - [ ] Redesign
 - [ ] Add profile page
 - [ ] Migrate database to PostgreSQL
