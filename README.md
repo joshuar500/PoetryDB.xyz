@@ -8,3 +8,9 @@ Make sure you have Vagrant installed. cd into vagrant folder and `vagrant up`. T
 
 ### Technology
 Vagrant, Flask
+
+###
+- [ ] Redesign
+- [ ] Add profile page
+- [ ] Migrate database to PostgreSQL
+- [ ] Add administrative page to approve suggested poems/remove spam/duplicates
